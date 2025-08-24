@@ -32,6 +32,9 @@ function App() {
           <Footer />
         </Suspense>
       </main>
+      {/* ElevenLabs Voice AI Widget */}
+      {/* @ts-ignore - Custom element from external library */}
+      <elevenlabs-convai agent-id="agent_01jxpqwnv9f6eapf77wejkeyqh"></elevenlabs-convai>
     </div>
   );
 }
