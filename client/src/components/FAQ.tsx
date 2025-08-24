@@ -4,7 +4,7 @@ import { ChevronDown, HelpCircle } from 'lucide-react';
 const faqs = [
   {
     question: "How long does setup take?",
-    answer: "Setup typically takes 24-48 hours. We handle everything - from understanding your business to training the AI on your specific needs. You'll have a fully functional AI assistant ready to go in just 2 days."
+    answer: "Setup typically takes 5 working days. We handle everything - from understanding your business to training the AI on your specific needs. You'll have a fully functional AI assistant ready to go in just 5 working days."
   },
   {
     question: "Can it integrate with my CRM?",
