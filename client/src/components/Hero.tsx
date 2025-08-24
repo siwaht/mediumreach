@@ -30,15 +30,33 @@ const Hero = () => {
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient bg-300% slide-up"
               data-testid="text-hero-title"
             >
-              Custom AI Agents for Your Business
+              Cut Support Costs by 70% with AI Agents
             </h1>
-            <p 
-              className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto md:mx-0 slide-up"
-              data-testid="text-hero-description"
-              style={{ animationDelay: '0.1s' }}
-            >
-              Partner with MediumReach to build and launch custom AI agents. We'll help you automate support and boost engagement by connecting with your customers on their favorite platforms, including WhatsApp, Instagram, Telegram, Voice Calls etc.
-            </p>
+            <div className="space-y-4 mb-6 sm:mb-8">
+              <p 
+                className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto md:mx-0 slide-up"
+                data-testid="text-hero-description"
+                style={{ animationDelay: '0.1s' }}
+              >
+                <span className="font-semibold text-gray-800">Deploy in 72 hours. No coding required.</span> Transform your customer support with intelligent AI agents that work 24/7 across WhatsApp, Instagram, Telegram, and Voice Calls.
+              </p>
+              
+              {/* Key Metrics */}
+              <div className="flex flex-wrap gap-4 sm:gap-6 text-sm sm:text-base slide-up" style={{ animationDelay: '0.2s' }}>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-gray-700"><span className="font-semibold">&lt;2s</span> Response Time</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                  <span className="text-gray-700"><span className="font-semibold">100+</span> Languages</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                  <span className="text-gray-700"><span className="font-semibold">5 min</span> Integration</span>
+                </div>
+              </div>
+            </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
               <a 
                 href="#contact" 

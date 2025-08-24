@@ -42,11 +42,29 @@ const Footer = () => {
               <ul className="space-y-2">
                 <li>
                   <a 
-                    href="#features" 
+                    href="#how-it-works" 
                     className="text-sm sm:text-base text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-400 hover:bg-clip-text transition-all duration-300 inline-block py-1"
-                    data-testid="footer-link-features"
+                    data-testid="footer-link-how-it-works"
                   >
-                    Features
+                    How It Works
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="#industry" 
+                    className="text-sm sm:text-base text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-400 hover:bg-clip-text transition-all duration-300 inline-block py-1"
+                    data-testid="footer-link-solutions"
+                  >
+                    Solutions
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="#faq" 
+                    className="text-sm sm:text-base text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-400 hover:bg-clip-text transition-all duration-300 inline-block py-1"
+                    data-testid="footer-link-faq"
+                  >
+                    FAQ
                   </a>
                 </li>
                 <li>
