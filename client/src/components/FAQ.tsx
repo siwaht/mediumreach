@@ -41,6 +41,10 @@ const faqs = [
   {
     question: "What happens during high traffic periods?",
     answer: "Our AI scales automatically to handle unlimited conversations simultaneously. Whether it's 10 or 10,000 customers, everyone gets instant responses without any delays or queues."
+  },
+  {
+    question: "Is the voice calling agent available in my country?",
+    answer: "Our service uses Voice over IP (VoIP) technology, which is restricted in certain regions, notably in the Middle East. Please contact our support team to confirm if voice calling is available in your country."
   }
 ];
 
