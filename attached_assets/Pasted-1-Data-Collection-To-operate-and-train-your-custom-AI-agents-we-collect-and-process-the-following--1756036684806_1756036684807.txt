@@ -1,0 +1,59 @@
+1. Data Collection
+To operate and train your custom AI agents, we collect and process the following data related to your business and your customers' interactions:
+
+Interaction Data: Text messages, chat conversations, and voice recordings from calls with your AI agent.
+
+User Data: User preferences and interaction history to improve performance.
+
+Technical Data: Information necessary for service operation, such as logs and API call data.
+
+2. Use of AI Technology
+Our custom AI agents are built using advanced technology to serve your business needs:
+
+Natural Language Processing (NLP): To understand and interpret text and chat inquiries.
+
+Voice Recognition & Synthesis: To manage voice-based interactions effectively.
+
+Machine Learning (ML): To train your agent for more accurate, personalized responses over time.
+
+Secure Infrastructure: All data is processed and stored using secure, proprietary methods.
+
+3. Data Protection
+Mediumreach.com is committed to protecting your data with robust security measures:
+
+Encryption: End-to-end encryption for all communications between your customers and the AI agent.
+
+Secure Storage: Data is stored in secure cloud environments with regular, redundant backups.
+
+Access Control: Strict access controls and authentication protocols to prevent unauthorized access.
+
+Audits: Regular security audits and system updates to address emerging threats.
+
+4. Your Rights as a Client
+As a client of Mediumreach.com, you have the right to:
+
+Access Your Data: Request access to the data associated with your account.
+
+Request Deletion: Request the deletion of your account data, subject to legal and operational requirements.
+
+Opt-Out: Opt-out of specific data collection processes where feasible.
+
+Export Your Data: Request an export of your primary account data.
+
+5. Data Retention
+We retain data only for as long as it is necessary for the following purposes:
+
+Service Improvement: Enhancing the performance and accuracy of your AI agent.
+
+Legal & Compliance: Fulfilling our legal and contractual obligations.
+
+Quality Assurance & Support: Assisting with user support and maintaining service quality.
+
+Changes to Services and Pricing
+This section would typically be part of your Terms of Service document.
+
+1. Service Modifications
+We are constantly improving our services. We may add or remove functionalities or features, and we may suspend or stop a service altogether.
+
+2. Pricing Adjustments
+Considering market changes and the evolution of our services, Mediumreach.com reserves the right to modify our pricing. We are committed to transparency and will provide all clients with a minimum of two (2) weeks' advance notice before any pricing changes take effect.

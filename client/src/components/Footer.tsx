@@ -144,57 +144,72 @@ const Footer = () => {
             <div className="space-y-4 sm:space-y-6">
               <section>
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">1. Data Collection</h3>
-                <p className="text-sm sm:text-base text-gray-600">We collect and process the following types of data:</p>
-                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-1">
-                  <li>Text messages and chat conversations</li>
-                  <li>Voice recordings from calls</li>
-                  <li>User preferences and interaction history</li>
-                  <li>Technical data necessary for service operation</li>
+                <p className="text-sm sm:text-base text-gray-600 mb-2">To operate and train your custom AI agents, we collect and process the following data related to your business and your customers' interactions:</p>
+                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-2">
+                  <li><strong>Interaction Data:</strong> Text messages, chat conversations, and voice recordings from calls with your AI agent.</li>
+                  <li><strong>User Data:</strong> User preferences and interaction history to improve performance.</li>
+                  <li><strong>Technical Data:</strong> Information necessary for service operation, such as logs and API call data.</li>
                 </ul>
               </section>
 
               <section>
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">2. Use of AI Technology</h3>
-                <p className="text-sm sm:text-base text-gray-600">Our AI agents utilize:</p>
-                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-1">
-                  <li>Natural Language Processing for text understanding</li>
-                  <li>Voice recognition and synthesis</li>
-                  <li>Machine Learning for personalized responses</li>
-                  <li>Secure data processing and storage</li>
+                <p className="text-sm sm:text-base text-gray-600 mb-2">Our custom AI agents are built using advanced technology to serve your business needs:</p>
+                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-2">
+                  <li><strong>Natural Language Processing (NLP):</strong> To understand and interpret text and chat inquiries.</li>
+                  <li><strong>Voice Recognition & Synthesis:</strong> To manage voice-based interactions effectively.</li>
+                  <li><strong>Machine Learning (ML):</strong> To train your agent for more accurate, personalized responses over time.</li>
+                  <li><strong>Secure Infrastructure:</strong> All data is processed and stored using secure, proprietary methods.</li>
                 </ul>
               </section>
 
               <section>
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">3. Data Protection</h3>
-                <p className="text-sm sm:text-base text-gray-600">We implement robust security measures:</p>
-                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-1">
-                  <li>End-to-end encryption for all communications</li>
-                  <li>Secure cloud storage with regular backups</li>
-                  <li>Access controls and authentication</li>
-                  <li>Regular security audits and updates</li>
+                <p className="text-sm sm:text-base text-gray-600 mb-2">Mediumreach.com is committed to protecting your data with robust security measures:</p>
+                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-2">
+                  <li><strong>Encryption:</strong> End-to-end encryption for all communications between your customers and the AI agent.</li>
+                  <li><strong>Secure Storage:</strong> Data is stored in secure cloud environments with regular, redundant backups.</li>
+                  <li><strong>Access Control:</strong> Strict access controls and authentication protocols to prevent unauthorized access.</li>
+                  <li><strong>Audits:</strong> Regular security audits and system updates to address emerging threats.</li>
                 </ul>
               </section>
 
               <section>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">4. User Rights</h3>
-                <p className="text-sm sm:text-base text-gray-600">You have the right to:</p>
-                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-1">
-                  <li>Access your personal data</li>
-                  <li>Request data deletion</li>
-                  <li>Opt-out of data collection</li>
-                  <li>Export your data</li>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">4. Your Rights as a Client</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-2">As a client of Mediumreach.com, you have the right to:</p>
+                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-2">
+                  <li><strong>Access Your Data:</strong> Request access to the data associated with your account.</li>
+                  <li><strong>Request Deletion:</strong> Request the deletion of your account data, subject to legal and operational requirements.</li>
+                  <li><strong>Opt-Out:</strong> Opt-out of specific data collection processes where feasible.</li>
+                  <li><strong>Export Your Data:</strong> Request an export of your primary account data.</li>
                 </ul>
               </section>
 
               <section>
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">5. Data Retention</h3>
-                <p className="text-sm sm:text-base text-gray-600">We retain data only as long as necessary for:</p>
-                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-1">
-                  <li>Service improvement</li>
-                  <li>Legal compliance</li>
-                  <li>Quality assurance</li>
-                  <li>User support</li>
+                <p className="text-sm sm:text-base text-gray-600 mb-2">We retain data only for as long as it is necessary for the following purposes:</p>
+                <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-2">
+                  <li><strong>Service Improvement:</strong> Enhancing the performance and accuracy of your AI agent.</li>
+                  <li><strong>Legal & Compliance:</strong> Fulfilling our legal and contractual obligations.</li>
+                  <li><strong>Quality Assurance & Support:</strong> Assisting with user support and maintaining service quality.</li>
                 </ul>
+              </section>
+
+              <section className="border-t pt-4">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">Changes to Services and Pricing</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-3 italic">This section would typically be part of your Terms of Service document.</p>
+                
+                <div className="space-y-3">
+                  <div>
+                    <h4 className="text-base sm:text-lg font-semibold mb-2">1. Service Modifications</h4>
+                    <p className="text-sm sm:text-base text-gray-600">We are constantly improving our services. We may add or remove functionalities or features, and we may suspend or stop a service altogether.</p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-base sm:text-lg font-semibold mb-2">2. Pricing Adjustments</h4>
+                    <p className="text-sm sm:text-base text-gray-600">Considering market changes and the evolution of our services, Mediumreach.com reserves the right to modify our pricing. We are committed to transparency and will provide all clients with a minimum of two (2) weeks' advance notice before any pricing changes take effect.</p>
+                  </div>
+                </div>
               </section>
             </div>
           </div>
