@@ -4,32 +4,36 @@ import {
   MessageSquareShare, 
   Database, 
   Sparkles, 
-  UserSquare2
+  Users,
+  Shield,
+  Zap,
+  Globe,
+  Bot
 } from 'lucide-react';
 
 const featuresList = [
   {
-    icon: <MessageSquareShare className="h-6 w-6 text-blue-600" />,
+    Icon: MessageSquareShare,
     title: 'Agent Protocols (MCP)',
     description: 'It\'s like a universal adapter, allowing our AI agent to securely connect with and use third-party apps to get things done for you.'
   },
   {
-    icon: <Brain className="h-6 w-6 text-blue-600" />,
+    Icon: Brain,
     title: 'Long-Term Memory',
     description: 'Agent remembers your past conversations so you don\'t have to start over every time.'
   },
   {
-    icon: <Sparkles className="h-6 w-6 text-blue-600" />,
+    Icon: Sparkles,
     title: 'Advanced RAG Techniques',
     description: 'Agent answers customer questions by searching only within the specific company documents and data that you select.'
   },
   {
-    icon: <UserSquare2 className="h-6 w-6 text-blue-600" />,
+    Icon: Users,
     title: 'Multi-Agent Systems',
     description: 'A coordinated team of specialized AI agents working together, either directed by a manager or collaborating like a swarm, to solve complex problems.'
   },
   {
-    icon: <Database className="h-6 w-6 text-blue-600" />,
+    Icon: Database,
     title: 'Vector Databases',
     description: 'Similarity search to match the meaning of your query, not just the exact words.'
   },
@@ -73,9 +77,7 @@ const Features = () => {
                 className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 relative z-10"
                 aria-hidden="true"
               >
-                {React.cloneElement(feature.icon, { 
-                  className: "h-6 w-6 text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text" 
-                })}
+                <feature.Icon className="h-6 w-6 sm:h-7 sm:w-7 text-blue-600" />
               </div>
               <h3 
                 id={`feature-title-${index}`}
