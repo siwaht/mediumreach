@@ -29,7 +29,7 @@ const industries = [
   },
   {
     icon: UtensilsCrossed,
-    title: 'Restaurants',
+    title: 'Restaurants & Hospitality',
     solutions: ['Take reservations', 'Share menu info', 'Process orders'],
     color: 'bg-orange-500'
   },
