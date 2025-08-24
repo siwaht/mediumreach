@@ -58,7 +58,7 @@ const platforms = [
 const Platforms = () => {
   return (
     <section 
-      className="py-16 sm:py-20 md:py-24 bg-white"
+      className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-white via-gray-50/30 to-white relative"
       aria-labelledby="platforms-heading"
       data-testid="platforms-section"
     >
@@ -66,7 +66,7 @@ const Platforms = () => {
         <div className="text-center mb-12 sm:mb-16">
           <h2 
             id="platforms-heading"
-            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent"
+            className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
             data-testid="text-platforms-title"
           >
             Available Platforms
@@ -87,25 +87,26 @@ const Platforms = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="group bg-white rounded-2xl p-5 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-transparent hover:-translate-y-1 relative overflow-hidden"
               data-testid={`platform-card-${index}`}
               aria-labelledby={`platform-title-${index}`}
             >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-500"></div>
               <div 
-                className={`${platform.color} w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-white mb-4 sm:mb-6`}
+                className={`${platform.color} w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-white mb-4 sm:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 relative z-10`}
                 aria-hidden="true"
               >
                 {platform.icon}
               </div>
               <h3 
                 id={`platform-title-${index}`}
-                className={`text-lg sm:text-xl font-semibold mb-2 sm:mb-3 ${platform.textColor}`}
+                className={`text-lg sm:text-xl font-bold mb-2 sm:mb-3 ${platform.textColor} group-hover:scale-105 transition-transform duration-300 origin-left relative z-10`}
                 data-testid={`text-platform-title-${index}`}
               >
                 {platform.name}
               </h3>
               <p 
-                className="text-sm sm:text-base text-gray-600 leading-relaxed"
+                className="text-sm sm:text-base text-gray-600 leading-relaxed relative z-10"
                 data-testid={`text-platform-description-${index}`}
               >
                 {platform.description}

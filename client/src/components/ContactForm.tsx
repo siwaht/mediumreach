@@ -76,24 +76,30 @@ const ContactForm = () => {
   return (
     <section 
       id="contact" 
-      className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-gray-100"
+      className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30 relative"
       aria-labelledby="contact-heading"
       data-testid="contact-section"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-1/2 -right-1/4 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute -bottom-1/2 -left-1/4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+      </div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto">
-          <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden">
+          <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
             <div className="grid md:grid-cols-2">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 sm:p-8 md:p-10 text-white">
+              <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 p-6 sm:p-8 md:p-10 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-2xl"></div>
                 <h2 
                   id="contact-heading"
-                  className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6"
+                  className="text-2xl sm:text-3xl font-extrabold mb-4 sm:mb-6 relative z-10"
                   data-testid="text-contact-title"
                 >
                   Let's Build Your AI Agents
                 </h2>
                 <p 
-                  className="mb-6 sm:mb-8 opacity-90 leading-relaxed text-sm sm:text-base"
+                  className="mb-6 sm:mb-8 opacity-95 leading-relaxed text-sm sm:text-base relative z-10"
                   data-testid="text-contact-description"
                 >
                   Ready to transform your customer interactions? Get in touch with our team to discuss how our AI agents can help your business grow.
@@ -135,9 +141,11 @@ const ContactForm = () => {
                 
                 {formState.submitted ? (
                   <div className="flex flex-col items-center text-center py-8">
-                    <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
-                    <h4 className="text-xl font-semibold text-gray-800 mb-2">Thank you for reaching out!</h4>
-                    <p className="text-gray-600">
+                    <div className="bg-green-100 rounded-full p-3 mb-4">
+                      <CheckCircle className="h-12 w-12 sm:h-16 sm:w-16 text-green-500" />
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-800 mb-2">Thank you for reaching out!</h4>
+                    <p className="text-gray-600 max-w-sm">
                       We've received your message and will contact you shortly to discuss your AI agent needs.
                     </p>
                   </div>
@@ -154,7 +162,7 @@ const ContactForm = () => {
                         value={formState.name}
                         onChange={handleChange}
                         disabled={formState.isSubmitting}
-                        className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px]"
+                        className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px] hover:border-gray-400"
                         required
                         data-testid="input-name"
                         aria-label="Your name"
@@ -172,7 +180,7 @@ const ContactForm = () => {
                         value={formState.email}
                         onChange={handleChange}
                         disabled={formState.isSubmitting}
-                        className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px]"
+                        className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px] hover:border-gray-400"
                         required
                         data-testid="input-email"
                         aria-label="Your email address"
@@ -190,7 +198,7 @@ const ContactForm = () => {
                         value={formState.company}
                         onChange={handleChange}
                         disabled={formState.isSubmitting}
-                        className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px]"
+                        className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px] hover:border-gray-400"
                         data-testid="input-company"
                         aria-label="Your company name"
                       />
@@ -207,7 +215,7 @@ const ContactForm = () => {
                         onChange={handleChange}
                         rows={4}
                         disabled={formState.isSubmitting}
-                        className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed hover:border-gray-400"
                         required
                         data-testid="input-message"
                         aria-label="Your message"
@@ -221,7 +229,7 @@ const ContactForm = () => {
                     <button
                       type="submit"
                       disabled={formState.isSubmitting}
-                      className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 active:transform active:scale-[0.98] text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg disabled:bg-blue-400 disabled:cursor-not-allowed disabled:transform-none min-h-[48px]"
+                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold px-6 py-3.5 rounded-lg transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:transform-none min-h-[48px]"
                       data-testid="button-submit"
                       aria-label="Submit contact form"
                     >
