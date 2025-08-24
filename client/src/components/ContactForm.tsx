@@ -75,7 +75,7 @@ const ContactForm = () => {
 
   return (
     <section 
-      id="contact" 
+      id="contact-form" 
       className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30 relative"
       aria-labelledby="contact-heading"
       data-testid="contact-section"
