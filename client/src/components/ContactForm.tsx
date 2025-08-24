@@ -96,13 +96,13 @@ const ContactForm = () => {
                   className="text-2xl sm:text-3xl font-extrabold mb-4 sm:mb-6 relative z-10"
                   data-testid="text-contact-title"
                 >
-                  Let's Build Your AI Agents
+                  Let's Get Your AI Assistant Started
                 </h2>
                 <p 
                   className="mb-6 sm:mb-8 opacity-95 leading-relaxed text-sm sm:text-base relative z-10"
                   data-testid="text-contact-description"
                 >
-                  Ready to transform your customer interactions? Get in touch with our team to discuss how our AI agents can help your business grow.
+                  Stop losing customers to slow responses. Tell us about your business and we'll show you how AI can help - usually within 24 hours.
                 </p>
                 
                 <div className="space-y-4">
@@ -146,7 +146,7 @@ const ContactForm = () => {
                     </div>
                     <h4 className="text-xl font-bold text-gray-800 mb-2">Thank you for reaching out!</h4>
                     <p className="text-gray-600 max-w-sm">
-                      We've received your message and will contact you shortly to discuss your AI agent needs.
+                      We'll call or email you within 24 hours with ideas for your business.
                     </p>
                   </div>
                 ) : (

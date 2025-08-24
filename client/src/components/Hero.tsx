@@ -30,14 +30,14 @@ const Hero = () => {
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient bg-300% slide-up"
               data-testid="text-hero-title"
             >
-              Custom AI Agents for Your Business
+              AI That Talks to Your Customers
             </h1>
             <p 
               className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto md:mx-0 slide-up"
               data-testid="text-hero-description"
               style={{ animationDelay: '0.1s' }}
             >
-              Partner with MediumReach to build and launch custom AI agents. We'll help you automate support and boost engagement by connecting with your customers on their favorite platforms, including WhatsApp, Instagram, Telegram, Voice Calls etc.
+              Let MediumReach create smart AI assistants that answer customer questions instantly on WhatsApp, Instagram, phone calls, and more. Available 24/7, never tired, always helpful.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
               <a 

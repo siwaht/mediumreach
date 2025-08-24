@@ -33,30 +33,30 @@ const VoiceAI = () => {
                 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white mb-3 leading-tight"
                 data-testid="text-voiceai-title"
               >
-                Conversations That{' '}
-                <span className="text-yellow-300">Actually Convert</span>
+                Phone Calls That{' '}
+                <span className="text-yellow-300">Close Deals</span>
               </h2>
               
               <p 
                 className="text-blue-100 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base"
                 data-testid="text-voiceai-description"
               >
-                Our AI Voice Agents engage in natural, intelligent conversations to solve problems, 
-                book appointments, and drive sales, 24/7.
+                Your AI handles phone calls just like a real person - answering questions, 
+                booking appointments, and making sales - any time, day or night.
               </p>
 
               <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                 <div className="flex items-center text-white/90 hover:text-white transition-colors duration-300" data-testid="feature-inbound-outbound">
                   <CheckCircle className="h-3 sm:h-4 w-3 sm:w-4 text-green-400 mr-2 sm:mr-3 flex-shrink-0" />
-                  <span className="text-xs sm:text-sm font-medium">Inbound & Outbound Calls</span>
+                  <span className="text-xs sm:text-sm font-medium">Answers & Makes Phone Calls</span>
                 </div>
                 <div className="flex items-center text-white/90 hover:text-white transition-colors duration-300" data-testid="feature-ai-conversation">
                   <CheckCircle className="h-3 sm:h-4 w-3 sm:w-4 text-green-400 mr-2 sm:mr-3 flex-shrink-0" />
-                  <span className="text-xs sm:text-sm font-medium">Advanced Conversation AI</span>
+                  <span className="text-xs sm:text-sm font-medium">Sounds Like a Real Person</span>
                 </div>
                 <div className="flex items-center text-white/90 hover:text-white transition-colors duration-300" data-testid="feature-crm-integration">
                   <CheckCircle className="h-3 sm:h-4 w-3 sm:w-4 text-green-400 mr-2 sm:mr-3 flex-shrink-0" />
-                  <span className="text-xs sm:text-sm font-medium">Real-time CRM Integration</span>
+                  <span className="text-xs sm:text-sm font-medium">Updates Your Systems Instantly</span>
                 </div>
               </div>
 

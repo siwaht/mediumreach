@@ -14,28 +14,28 @@ import {
 const featuresList = [
   {
     Icon: MessageSquareShare,
-    title: 'Agent Protocols (MCP)',
-    description: 'It\'s like a universal adapter, allowing our AI agent to securely connect with and use third-party apps to get things done for you.'
+    title: 'Universal Connections',
+    description: 'Your AI assistant connects with all your business tools - CRM, calendar, inventory - to get real work done, not just chat.'
   },
   {
     Icon: Brain,
-    title: 'Long-Term Memory',
-    description: 'Agent remembers your past conversations so you don\'t have to start over every time.'
+    title: 'Remembers Everything',
+    description: 'Your customers never have to repeat themselves. The AI remembers their history, preferences, and past issues.'
   },
   {
     Icon: Sparkles,
-    title: 'Advanced RAG Techniques',
-    description: 'Agent answers customer questions by searching only within the specific company documents and data that you select.'
+    title: 'Smart Document Search',
+    description: 'The AI instantly finds answers from your product manuals, FAQs, and policies - like having an expert who\'s read everything.'
   },
   {
     Icon: Users,
-    title: 'Multi-Agent Systems',
-    description: 'A coordinated team of specialized AI agents working together, either directed by a manager or collaborating like a swarm, to solve complex problems.'
+    title: 'Team of AI Helpers',
+    description: 'Multiple AI assistants work together - one handles sales, another support, another scheduling - all coordinating seamlessly.'
   },
   {
     Icon: Database,
-    title: 'Vector Databases',
-    description: 'Similarity search to match the meaning of your query, not just the exact words.'
+    title: 'Intelligent Search',
+    description: 'Understands what customers really mean, even when they use different words or make typos.'
   },
 ];
 
@@ -54,13 +54,13 @@ const Features = () => {
             className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
             data-testid="text-features-title"
           >
-            Advanced AI Technologies
+            How Our AI Works
           </h2>
           <p 
             className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0 leading-relaxed"
             data-testid="text-features-description"
           >
-            Our AI agents leverage cutting-edge technologies to deliver exceptional customer experiences across multiple platforms.
+            Simple, powerful features that make your AI assistant actually helpful - not just another chatbot.
           </p>
         </div>
 
