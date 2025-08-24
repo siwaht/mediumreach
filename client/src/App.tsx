@@ -4,12 +4,9 @@ import Hero from './components/Hero';
 import LoadingSpinner from './components/LoadingSpinner';
 
 // Lazy load components for better performance
-const HowItWorks = lazy(() => import('./components/HowItWorks'));
-const IndustryUseCases = lazy(() => import('./components/IndustryUseCases'));
+const Features = lazy(() => import('./components/Features'));
 const VoiceAI = lazy(() => import('./components/VoiceAI'));
 const Platforms = lazy(() => import('./components/Platforms'));
-const Comparison = lazy(() => import('./components/Comparison'));
-const FAQ = lazy(() => import('./components/FAQ'));
 const ContactForm = lazy(() => import('./components/ContactForm'));
 const Footer = lazy(() => import('./components/Footer'));
 
@@ -24,12 +21,9 @@ function App() {
       >
         <Hero />
         <Suspense fallback={<LoadingSpinner />}>
-          <HowItWorks />
-          <IndustryUseCases />
+          <Features />
           <VoiceAI />
           <Platforms />
-          <Comparison />
-          <FAQ />
           <ContactForm />
           <Footer />
         </Suspense>
