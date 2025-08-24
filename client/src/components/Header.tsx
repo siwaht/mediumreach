@@ -35,11 +35,11 @@ const Header = () => {
               onClick={handleLogoClick}
               className="flex items-center cursor-pointer group"
             >
-              <span className="text-3xl font-bold">
-                <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200 inline-block">
-                  MediumReach
-                </span>
-              </span>
+              <img 
+                src="/attached_assets/mediumreach_transprant_logo_1756022520435.png"
+                alt="MediumReach"
+                className="h-10 md:h-12 w-auto hover:scale-105 transition-transform duration-200"
+              />
             </div>
           </div>
 
