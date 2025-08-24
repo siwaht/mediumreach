@@ -57,11 +57,10 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8" aria-label="Desktop navigation">
             <a 
               href="#features" 
-              className="text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 relative group"
+              className="text-gray-700 hover:text-blue-600 font-medium transition-all duration-300"
               data-testid="nav-features-desktop"
             >
               Features
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a 
               href="#contact" 
