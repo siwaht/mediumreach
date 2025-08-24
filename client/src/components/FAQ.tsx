@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     question: "How much does it cost?",
-    answer: "Pricing starts at $299/month for small businesses. We offer flexible plans based on conversation volume and features needed. Most clients see ROI within the first month through reduced support costs."
+    answer: "Plans start at $299/month, which includes 20,000 monthly interactions on a single platform. We offer flexible pricing based on your volume and feature needs, with most clients seeing a return on investment within the first month."
   },
   {
     question: "Is my customer data secure?",
