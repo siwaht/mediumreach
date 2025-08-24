@@ -18,20 +18,12 @@ function App() {
         <Hero />
         <Suspense fallback={<LoadingSpinner />}>
           <Features />
-        </Suspense>
-        <Suspense fallback={<LoadingSpinner />}>
           <VoiceAI />
-        </Suspense>
-        <Suspense fallback={<LoadingSpinner />}>
           <Platforms />
-        </Suspense>
-        <Suspense fallback={<LoadingSpinner />}>
           <ContactForm />
+          <Footer />
         </Suspense>
       </main>
-      <Suspense fallback={<LoadingSpinner />}>
-        <Footer />
-      </Suspense>
     </div>
   );
 }
