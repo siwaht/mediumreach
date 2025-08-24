@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import logoImage from '@assets/mediumreach_transprant_logo_1756022520435.png';
 
 const Footer = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
@@ -12,11 +11,16 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center">
-              <img 
-                src={logoImage}
-                alt="MediumReach"
-                className="h-10 w-auto"
-              />
+              <div className="flex items-center gap-2">
+                <img 
+                  src="/attached_assets/mediumreach_transprant_logo_1756022520435.png"
+                  alt="MediumReach Logo"
+                  className="h-10 w-auto"
+                />
+                <span className="text-2xl font-bold text-white">
+                  MediumReach
+                </span>
+              </div>
             </div>
             <p className="text-gray-400 max-w-md">
               Transforming customer interactions with intelligent AI agents across messaging platforms and voice calls.
