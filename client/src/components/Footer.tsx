@@ -42,7 +42,7 @@ const Footer = () => {
               <ul className="space-y-2">
                 <li>
                   <a 
-                    href="#features" 
+                    href="#how-it-works" 
                     className="text-sm sm:text-base text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-400 hover:bg-clip-text transition-all duration-300 inline-block py-1"
                     data-testid="footer-link-features"
                   >
@@ -51,7 +51,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <a 
-                    href="#contact" 
+                    href="#contact-form" 
                     className="text-sm sm:text-base text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-400 hover:bg-clip-text transition-all duration-300 inline-block py-1"
                     data-testid="footer-link-contact"
                   >

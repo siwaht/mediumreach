@@ -56,7 +56,7 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center" aria-label="Desktop navigation">
             <a 
-              href="#contact" 
+              href="#contact-form" 
               className="relative bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:from-blue-800 active:to-purple-800 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 overflow-hidden group"
               data-testid="nav-contact-desktop"
             >
@@ -90,7 +90,7 @@ const Header = () => {
         >
           <nav className="flex flex-col">
             <a 
-              href="#contact" 
+              href="#contact-form" 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:from-blue-800 active:to-purple-800 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 inline-block text-center shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
               onClick={() => setIsOpen(false)}
               data-testid="nav-contact-mobile"

@@ -41,7 +41,7 @@ const Hero = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
               <a 
-                href="#contact" 
+                href="#contact-form" 
                 className="relative bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-6 sm:px-8 py-3.5 rounded-full text-center transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 min-h-[48px] flex items-center justify-center overflow-hidden group slide-up"
                 data-testid="button-get-started"
                 aria-label="Get started with AI agents"
@@ -52,7 +52,7 @@ const Hero = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity duration-300 -z-10"></div>
               </a>
               <a 
-                href="#features" 
+                href="#how-it-works" 
                 className="relative border-2 border-gray-300 hover:border-transparent bg-white hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 text-gray-700 hover:text-blue-600 font-semibold px-6 sm:px-8 py-3.5 rounded-full text-center transition-all duration-300 min-h-[48px] flex items-center justify-center shadow-md hover:shadow-xl hover:scale-105 active:scale-95 group slide-up"
                 data-testid="button-learn-more"
                 aria-label="Learn more about our features"

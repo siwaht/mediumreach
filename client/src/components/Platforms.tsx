@@ -58,6 +58,7 @@ const platforms = [
 const Platforms = () => {
   return (
     <section 
+      id="platforms"
       className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-white via-gray-50/30 to-white relative"
       aria-labelledby="platforms-heading"
       data-testid="platforms-section"
