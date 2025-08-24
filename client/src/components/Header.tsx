@@ -54,14 +54,7 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8" aria-label="Desktop navigation">
-            <a 
-              href="#features" 
-              className="text-gray-700 hover:text-blue-600 font-medium transition-all duration-300"
-              data-testid="nav-features-desktop"
-            >
-              Features
-            </a>
+          <nav className="hidden md:flex items-center" aria-label="Desktop navigation">
             <a 
               href="#contact" 
               className="relative bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:from-blue-800 active:to-purple-800 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 overflow-hidden group"
@@ -95,15 +88,7 @@ const Header = () => {
           aria-label="Mobile navigation"
           data-testid="mobile-menu"
         >
-          <nav className="flex flex-col space-y-4">
-            <a 
-              href="#features" 
-              className="text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 py-2 px-3 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-xl"
-              onClick={() => setIsOpen(false)}
-              data-testid="nav-features-mobile"
-            >
-              Features
-            </a>
+          <nav className="flex flex-col">
             <a 
               href="#contact" 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:from-blue-800 active:to-purple-800 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 inline-block text-center shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
