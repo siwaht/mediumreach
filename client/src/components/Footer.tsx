@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../assets/logo.png';
 import { X } from 'lucide-react';
 
 const Footer = () => {
@@ -20,12 +21,19 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center">
-              <span 
-                className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
-                data-testid="footer-logo"
-              >
-                MediumReach
-              </span>
+              <div className="flex items-center space-x-2">
+                <img 
+                  src={logo} 
+                  alt="MediumReach Logo" 
+                  className="h-8 w-8 sm:h-10 sm:w-10"
+                />
+                <span 
+                  className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+                  data-testid="footer-logo"
+                >
+                  MediumReach
+                </span>
+              </div>
             </div>
             <p 
               className="text-sm sm:text-base text-gray-400 max-w-md"
