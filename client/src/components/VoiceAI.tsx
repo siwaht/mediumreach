@@ -61,7 +61,7 @@ const VoiceAI = () => {
               </div>
 
               <a 
-                href="#contact" 
+                href="#contact-form" 
                 className="inline-flex items-center bg-white hover:bg-gradient-to-r hover:from-white hover:to-yellow-50 text-purple-600 hover:text-purple-700 font-bold px-4 sm:px-6 py-2.5 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 text-sm sm:text-base min-h-[44px]"
                 data-testid="button-discuss-voiceai"
                 aria-label="Discuss Voice AI solutions"
