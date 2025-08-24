@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import logo from '../assets/logo.svg';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,18 +45,11 @@ const Header = () => {
               aria-label="MediumReach - Go to top"
               data-testid="logo-home"
             >
-              <div className="flex items-center space-x-2">
-                <img 
-                  src={logo} 
-                  alt="MediumReach Logo" 
-                  className="h-8 w-8 sm:h-10 sm:w-10 hover:scale-110 transition-transform duration-300"
-                />
-                <span className="text-2xl sm:text-3xl font-bold">
-                  <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 inline-block font-extrabold tracking-tight">
-                    MediumReach
-                  </span>
+              <span className="text-2xl sm:text-3xl font-bold">
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 inline-block font-extrabold tracking-tight">
+                  MediumReach
                 </span>
-              </div>
+              </span>
             </div>
           </div>
 

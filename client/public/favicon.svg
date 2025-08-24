@@ -1,54 +1,12 @@
-<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="8" fill="url(#paint0_linear)"/>
+  <path d="M16 8C19.3137 8 22 10.6863 22 14C22 15.5913 21.3284 17.0374 20.2426 18.1213C21.3284 19.2071 22 20.6522 22 22.25C22 22.6642 21.6642 23 21.25 23H10.75C10.3358 23 10 22.6642 10 22.25C10 20.6522 10.6716 19.2071 11.7574 18.1213C10.6716 17.0374 10 15.5913 10 14C10 10.6863 12.6863 8 16 8Z" fill="white"/>
   <defs>
-    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#7C3AED;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="0.5" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#6366F1"/>
     </linearGradient>
   </defs>
-  
-  <!-- Main circular path representing connectivity -->
-  <path d="M100 30 C140 30, 170 60, 170 100 C170 140, 140 170, 100 170 C60 170, 30 140, 30 100 C30 60, 60 30, 100 30" 
-        stroke="url(#gradient1)" 
-        stroke-width="8" 
-        fill="none"
-        stroke-linecap="round"/>
-  
-  <!-- Inner tech circuit design -->
-  <path d="M80 100 C80 80, 100 60, 120 60 C140 60, 160 80, 160 100 C160 120, 140 140, 120 140 C100 140, 80 120, 80 100" 
-        stroke="url(#gradient2)" 
-        stroke-width="6" 
-        fill="none"
-        stroke-linecap="round"
-        opacity="0.8"/>
-  
-  <!-- Connection nodes -->
-  <circle cx="100" cy="30" r="8" fill="url(#gradient1)"/>
-  <circle cx="170" cy="100" r="8" fill="url(#gradient1)"/>
-  <circle cx="100" cy="170" r="8" fill="url(#gradient1)"/>
-  <circle cx="30" cy="100" r="8" fill="url(#gradient1)"/>
-  
-  <!-- Inner nodes representing AI connections -->
-  <circle cx="85" cy="70" r="6" fill="url(#gradient2)"/>
-  <circle cx="115" cy="70" r="6" fill="url(#gradient2)"/>
-  <circle cx="130" cy="100" r="6" fill="url(#gradient2)"/>
-  <circle cx="85" cy="130" r="6" fill="url(#gradient2)"/>
-  <circle cx="115" cy="130" r="6" fill="url(#gradient2)"/>
-  <circle cx="70" cy="100" r="6" fill="url(#gradient2)"/>
-  
-  <!-- Connecting lines -->
-  <line x1="85" y1="70" x2="115" y2="70" stroke="url(#gradient2)" stroke-width="2" opacity="0.6"/>
-  <line x1="115" y1="70" x2="130" y2="100" stroke="url(#gradient2)" stroke-width="2" opacity="0.6"/>
-  <line x1="130" y1="100" x2="115" y2="130" stroke="url(#gradient2)" stroke-width="2" opacity="0.6"/>
-  <line x1="115" y1="130" x2="85" y2="130" stroke="url(#gradient2)" stroke-width="2" opacity="0.6"/>
-  <line x1="85" y1="130" x2="70" y2="100" stroke="url(#gradient2)" stroke-width="2" opacity="0.6"/>
-  <line x1="70" y1="100" x2="85" y2="70" stroke="url(#gradient2)" stroke-width="2" opacity="0.6"/>
-  
-  <!-- Central AI core -->
-  <circle cx="100" cy="100" r="12" fill="url(#gradient1)" opacity="0.9"/>
-  <circle cx="100" cy="100" r="8" fill="white" opacity="0.3"/>
 </svg>
