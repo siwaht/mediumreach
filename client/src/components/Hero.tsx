@@ -25,10 +25,6 @@ const Hero = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-0">
           <div className="md:w-1/2 md:pr-12 text-center md:text-left">
-            <div className="inline-flex items-center bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-sm font-semibold px-4 py-2 rounded-full mb-4 slide-up">
-              <span className="mr-2">✨</span>
-              Starting at $299/month
-            </div>
             <h1 
               id="hero-heading"
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient bg-300% slide-up"

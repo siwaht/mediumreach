@@ -8,7 +8,6 @@ const HowItWorks = lazy(() => import('./components/HowItWorks'));
 const Platforms = lazy(() => import('./components/Platforms'));
 const VoiceAI = lazy(() => import('./components/VoiceAI'));
 const IndustryUseCases = lazy(() => import('./components/IndustryUseCases'));
-const Pricing = lazy(() => import('./components/Pricing'));
 const FAQ = lazy(() => import('./components/FAQ'));
 const ContactForm = lazy(() => import('./components/ContactForm'));
 const Footer = lazy(() => import('./components/Footer'));
@@ -28,7 +27,6 @@ function App() {
           <Platforms />
           <VoiceAI />
           <IndustryUseCases />
-          <Pricing />
           <FAQ />
           <ContactForm />
           <Footer />
