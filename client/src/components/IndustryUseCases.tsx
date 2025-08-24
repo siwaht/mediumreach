@@ -61,7 +61,7 @@ const IndustryUseCases: React.FC = () => {
             className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3"
             data-testid="text-industry-title"
           >
-            How Our AI Works For You
+            Industry-Specific Use Cases
           </h2>
           <p 
             className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto"
