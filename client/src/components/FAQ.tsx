@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     question: "How do you train the AI?",
-    answer: "We train your AI using your business documents, FAQs, product information, and past customer conversations. The AI learns your specific tone, policies, and procedures to represent your brand perfectly."
+    answer: "We train your AI using your business documents, FAQs, product information or past customer conversations. The AI learns your specific tone, policies, and procedures to represent your brand perfectly."
   },
   {
     question: "What if the AI doesn't know an answer?",
