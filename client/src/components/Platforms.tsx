@@ -57,37 +57,60 @@ const platforms = [
 
 const Platforms = () => {
   return (
-    <section className="py-24 bg-white">
+    <section 
+      className="py-16 sm:py-20 md:py-24 bg-white"
+      aria-labelledby="platforms-heading"
+      data-testid="platforms-section"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 
+            id="platforms-heading"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent"
+            data-testid="text-platforms-title"
+          >
             Available Platforms
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p 
+            className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 sm:px-0"
+            data-testid="text-platforms-description"
+          >
             Deploy our AI agents across multiple platforms to provide seamless customer support everywhere your customers are.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {platforms.map((platform, index) => (
-            <motion.div
+            <motion.article
               key={platform.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="bg-white rounded-xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              data-testid={`platform-card-${index}`}
+              aria-labelledby={`platform-title-${index}`}
             >
-              <div className={`${platform.color} w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-6`}>
+              <div 
+                className={`${platform.color} w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-white mb-4 sm:mb-6`}
+                aria-hidden="true"
+              >
                 {platform.icon}
               </div>
-              <h3 className={`text-xl font-semibold mb-3 ${platform.textColor}`}>
+              <h3 
+                id={`platform-title-${index}`}
+                className={`text-lg sm:text-xl font-semibold mb-2 sm:mb-3 ${platform.textColor}`}
+                data-testid={`text-platform-title-${index}`}
+              >
                 {platform.name}
               </h3>
-              <p className="text-gray-600">
+              <p 
+                className="text-sm sm:text-base text-gray-600 leading-relaxed"
+                data-testid={`text-platform-description-${index}`}
+              >
                 {platform.description}
               </p>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

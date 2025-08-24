@@ -4,7 +4,11 @@ import { Mic, Phone, CheckCircle } from 'lucide-react';
 
 const VoiceAI = () => {
   return (
-    <section className="py-24 bg-gradient-to-r from-blue-600 to-indigo-700">
+    <section 
+      className="py-16 sm:py-20 md:py-24 bg-gradient-to-r from-blue-600 to-indigo-700"
+      aria-labelledby="voiceai-heading"
+      data-testid="voiceai-section"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
@@ -15,41 +19,50 @@ const VoiceAI = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 mb-4">
-                <Mic className="h-4 w-4 text-blue-200 mr-2" />
-                <span className="text-blue-100 text-sm font-medium">Voice AI Solutions</span>
+              <div className="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-2 sm:px-3 py-1 mb-3 sm:mb-4">
+                <Mic className="h-3 sm:h-4 w-3 sm:w-4 text-blue-200 mr-2" />
+                <span className="text-blue-100 text-xs sm:text-sm font-medium">Voice AI Solutions</span>
               </div>
               
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
+              <h2 
+                id="voiceai-heading"
+                className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 leading-tight"
+                data-testid="text-voiceai-title"
+              >
                 Conversations That{' '}
                 <span className="text-blue-200">Actually Convert</span>
               </h2>
               
-              <p className="text-blue-100 mb-6 leading-relaxed">
+              <p 
+                className="text-blue-100 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base"
+                data-testid="text-voiceai-description"
+              >
                 Our AI Voice Agents engage in natural, intelligent conversations to solve problems, 
                 book appointments, and drive sales, 24/7.
               </p>
 
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center text-blue-100">
-                  <CheckCircle className="h-4 w-4 text-blue-300 mr-3 flex-shrink-0" />
-                  <span className="text-sm">Inbound & Outbound Calls</span>
+              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+                <div className="flex items-center text-blue-100" data-testid="feature-inbound-outbound">
+                  <CheckCircle className="h-3 sm:h-4 w-3 sm:w-4 text-blue-300 mr-2 sm:mr-3 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm">Inbound & Outbound Calls</span>
                 </div>
-                <div className="flex items-center text-blue-100">
-                  <CheckCircle className="h-4 w-4 text-blue-300 mr-3 flex-shrink-0" />
-                  <span className="text-sm">Advanced Conversation AI</span>
+                <div className="flex items-center text-blue-100" data-testid="feature-ai-conversation">
+                  <CheckCircle className="h-3 sm:h-4 w-3 sm:w-4 text-blue-300 mr-2 sm:mr-3 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm">Advanced Conversation AI</span>
                 </div>
-                <div className="flex items-center text-blue-100">
-                  <CheckCircle className="h-4 w-4 text-blue-300 mr-3 flex-shrink-0" />
-                  <span className="text-sm">Real-time CRM Integration</span>
+                <div className="flex items-center text-blue-100" data-testid="feature-crm-integration">
+                  <CheckCircle className="h-3 sm:h-4 w-3 sm:w-4 text-blue-300 mr-2 sm:mr-3 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm">Real-time CRM Integration</span>
                 </div>
               </div>
 
               <a 
                 href="#contact" 
-                className="inline-flex items-center bg-white hover:bg-blue-50 active:bg-blue-100 active:transform active:scale-[0.98] text-blue-600 font-medium px-6 py-2 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center bg-white hover:bg-blue-50 active:bg-blue-100 active:transform active:scale-[0.98] text-blue-600 font-medium px-4 sm:px-6 py-2 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base min-h-[44px]"
+                data-testid="button-discuss-voiceai"
+                aria-label="Discuss Voice AI solutions"
               >
-                <Phone className="h-4 w-4 mr-2" />
+                <Phone className="h-3 sm:h-4 w-3 sm:w-4 mr-2" />
                 Discuss Voice AI
               </a>
             </motion.div>
