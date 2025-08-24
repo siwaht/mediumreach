@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import logoImage from '@assets/mediumreach_transprant_logo_1756022520435.png';
 
 const Footer = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
@@ -12,7 +13,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center">
               <img 
-                src="/attached_assets/mediumreach_transprant_logo_1756022520435.png"
+                src={logoImage}
                 alt="MediumReach"
                 className="h-10 w-auto"
               />

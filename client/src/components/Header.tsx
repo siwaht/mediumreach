@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import logoImage from '@assets/mediumreach_transprant_logo_1756022520435.png';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,7 @@ const Header = () => {
               className="flex items-center cursor-pointer group"
             >
               <img 
-                src="/attached_assets/mediumreach_transprant_logo_1756022520435.png"
+                src={logoImage}
                 alt="MediumReach"
                 className="h-10 md:h-12 w-auto hover:scale-105 transition-transform duration-200"
               />
