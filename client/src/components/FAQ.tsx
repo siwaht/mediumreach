@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     question: "How much does it cost?",
-    answer: "Plans start at $299/month on a single platform. We offer flexible pricing based on your volume and feature needs, with most clients seeing a return on investment within the first month."
+    answer: "🚀 UPDATED: Plans start at $299/month on a single platform. We offer flexible pricing based on your volume and feature needs, with most clients seeing a return on investment within the first month."
   },
   {
     question: "Is my customer data secure?",
