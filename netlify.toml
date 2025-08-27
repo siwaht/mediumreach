@@ -1,0 +1,44 @@
+# Netlify deployment configuration
+[build]
+  # Directory to change to before starting build
+  base = "."
+  
+  # Build command - builds both client and server
+  command = "npm run build:static"
+  
+  # Directory that contains the deploy-ready HTML files
+  publish = "dist/public"
+
+# Redirects for single-page application
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Environment variables (will use Netlify's environment variables in production)
+[build.environment]
+  NODE_VERSION = "20"
