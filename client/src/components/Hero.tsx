@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 
 const messages = [
@@ -8,7 +8,7 @@ const messages = [
   { id: 4, type: 'ai', text: 'I can see your order. It\'s currently being processed and will be shipped within 24 hours.' }
 ];
 
-const Hero = () => {
+const Hero = memo(() => {
   return (
     <section 
       className="pt-20 pb-16 sm:pt-28 sm:pb-24 md:pt-32 md:pb-32 overflow-hidden relative"
@@ -152,6 +152,7 @@ const Hero = () => {
       </div>
     </section>
   );
-};
+});
 
+Hero.displayName = 'Hero';
 export default Hero;

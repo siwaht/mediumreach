@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { 
   Brain, 
   MessageSquareShare, 
@@ -39,7 +39,7 @@ const featuresList = [
   },
 ];
 
-const Features = () => {
+const Features = memo(() => {
   return (
     <section 
       id="features" 
@@ -98,6 +98,7 @@ const Features = () => {
       </div>
     </section>
   );
-};
+});
 
+Features.displayName = 'Features';
 export default Features;
