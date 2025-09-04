@@ -1,0 +1,35 @@
+**Act as an Autonomous Web Development & DevOps Agent.**
+
+Your mission is to perform a comprehensive audit of this web application and then autonomously clean up the codebase by removing orphan files.
+
+**Phase 1: Audit and Report**
+
+First, generate a detailed report in a new file named `WEBSITE_AUDIT.md`. The report must cover the following sections. For each item, provide a **Status** (Pass/Fail/Warn), a **Finding**, and a **Recommendation**.
+
+* **1. AI & Language Model Readiness**
+    * `LLMs.txt` File
+    * Semantic Content & HTML Structure
+    * Structured Data (Schema.org)
+* **2. Technical SEO & User Experience**
+    * Sitemap (`sitemap.xml`)
+    * Crawlability (`robots.txt`)
+    * Mobile Responsiveness
+    * Core Web Vitals
+* **3. Deployment & Platform Compatibility**
+    * Build Configuration (`package.json` scripts)
+    * Platform Configuration (`netlify.toml`, etc.)
+    * Version Control (`.gitignore`)
+
+**Phase 2: Autonomous Code Hygiene**
+
+After completing the audit, proceed with the following automated cleanup sequence. Log your actions to the console.
+
+* **Step 1: Identify Orphans.** Scan the entire codebase for unreferenced and unused files (components, scripts, stylesheets, images). Create a definitive list of files to be deleted.
+* **Step 2: Create Backup.** Before deleting, create a backup of all identified orphan files by archiving them into a single file named `orphans_backup_[timestamp].zip`.
+* **Step 3: Execute Deletion.** Delete the orphan files from the project directory. Report each deleted file path to the console.
+* **Step 4: Verify Integrity.** After deletion, run the primary build command from `package.json` (e.g., `npm run build` or `vite build`).
+* **Step 5: Final Report.**
+    * If the build succeeds, report "SUCCESS: Code cleanup complete. Application build verified."
+    * If the build fails, report "ERROR: Build failed after deletion. An important file may have been removed." Then, immediately proceed to restore the deleted files from the `orphans_backup.zip` archive and report "RECOVERY: Files have been restored from backup."
+
+---
