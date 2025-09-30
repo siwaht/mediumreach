@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     question: "How much does it cost?",
-    answer: "Plans start at $299/month on a single platform. We offer flexible pricing based on your volume and feature needs, with most clients seeing a return on investment within the first month."
+    answer: "Our pricing is tailored to the complexity and level of customization your agent requires. We offer flexible plans based on your specific needs and features, ensuring you get a solution that delivers a clear return on investment."
   },
   {
     question: "Is my customer data secure?",
