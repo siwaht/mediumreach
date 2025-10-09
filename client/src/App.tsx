@@ -33,6 +33,7 @@ function App() {
           <Footer />
         </Suspense>
       </main>
+      <ElevenLabsWidget />
     </div>
   );
 }
