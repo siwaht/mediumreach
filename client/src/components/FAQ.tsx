@@ -44,7 +44,7 @@ const faqs = [
   },
   {
     question: "Is the voice calling agent available in my country?",
-    answer: "Voice Calling agent service is immediate in the UK, US, and most regions. However, the Middle East and a few others require an exclusive number (up to 7 weeks processing time). Let us know your country for the precise timeframe."
+    answer: "Voice Calling agent service is immediate in the UK, US, and most regions. However, the Middle East and a few others require an exclusive number (upto 7 weeks processing time). Let us know your country for the precise timeframe."
   }
 ];
 
