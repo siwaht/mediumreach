@@ -44,7 +44,7 @@ const faqs = [
   },
   {
     question: "Is the voice calling agent available in my country?",
-    answer: "Our service uses Voice over IP (VoIP) technology, which is restricted in certain regions, notably in the Middle East. Please contact our support team to confirm if voice calling is available in your country."
+    answer: "Voice Calling agent service is immediate in the UK, US, and most regions. However, the Middle East and a few others require an exclusive number (up to 7 weeks processing). Let us know your country for the precise timeframe."
   }
 ];
 
