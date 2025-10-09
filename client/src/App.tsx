@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import LoadingSpinner from './components/LoadingSpinner';
+import ElevenLabsWidget from './components/ElevenLabsWidget';
 
 // Lazy load components for better performance
 const HowItWorks = lazy(() => import('./components/HowItWorks'));
@@ -32,9 +33,6 @@ function App() {
           <Footer />
         </Suspense>
       </main>
-      {/* ElevenLabs Voice AI Widget */}
-      {/* @ts-ignore - Custom element from external library */}
-      <elevenlabs-convai agent-id="agent_01jxpqwnv9f6eapf77wejkeyqh"></elevenlabs-convai>
     </div>
   );
 }
