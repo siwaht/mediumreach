@@ -36,7 +36,7 @@ const ContactForm = () => {
     setFormState(prev => ({ ...prev, isSubmitting: true, error: '' }));
 
     try {
-      const response = await fetch('https://hook.eu2.make.com/8b2a1le43ogn3jno1yhml5yaanz8yn6o', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,8 +45,7 @@ const ContactForm = () => {
           name: formState.name,
           email: formState.email,
           company: formState.company,
-          message: formState.message,
-          timestamp: new Date().toISOString()
+          message: formState.message
         })
       });
 
@@ -150,7 +149,7 @@ const ContactForm = () => {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6" role="form">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                         Name *
