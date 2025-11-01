@@ -9,14 +9,20 @@ import { nanoid } from "nanoid";
 const viteLogger = createLogger();
 
 export function log(message: string, source = "express") {
-  const formattedTime = new Date().toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
-  });
+  // Only log in development or when explicitly enabled
+  const isDevelopment = process.env.NODE_ENV === "development";
+  const loggingEnabled = process.env.ENABLE_LOGGING === "true";
 
-  console.log(`${formattedTime} [${source}] ${message}`);
+  if (isDevelopment || loggingEnabled) {
+    const formattedTime = new Date().toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
+
+    console.log(`${formattedTime} [${source}] ${message}`);
+  }
 }
 
 export async function setupVite(app: Express, server: Server) {
@@ -33,7 +39,8 @@ export async function setupVite(app: Express, server: Server) {
       ...viteLogger,
       error: (msg, options) => {
         viteLogger.error(msg, options);
-        process.exit(1);
+        // Don't exit process on Vite errors in development
+        // This allows the server to recover from errors
       },
     },
     server: serverOptions,

@@ -19,15 +19,15 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Form validation
     if (!formState.name || !formState.email || !formState.message) {
       setFormState(prev => ({ ...prev, error: 'Please fill out all required fields' }));
       return;
     }
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Improved email validation (RFC 5322 compliant)
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!emailRegex.test(formState.email)) {
       setFormState(prev => ({ ...prev, error: 'Please enter a valid email address' }));
       return;
@@ -36,6 +36,10 @@ const ContactForm = () => {
     setFormState(prev => ({ ...prev, isSubmitting: true, error: '' }));
 
     try {
+      // Create AbortController for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
       const response = await fetch('https://hook.eu2.make.com/8b2a1le43ogn3jno1yhml5yaanz8yn6o', {
         method: 'POST',
         headers: {
@@ -47,13 +51,16 @@ const ContactForm = () => {
           company: formState.company,
           message: formState.message,
           timestamp: new Date().toISOString()
-        })
+        }),
+        signal: controller.signal
       });
 
+      clearTimeout(timeoutId);
+
       if (response.ok) {
-        setFormState(prev => ({ 
-          ...prev, 
-          submitted: true, 
+        setFormState(prev => ({
+          ...prev,
+          submitted: true,
           error: '',
           name: '',
           email: '',
@@ -65,9 +72,19 @@ const ContactForm = () => {
         throw new Error('Failed to send message');
       }
     } catch (error) {
-      setFormState(prev => ({ 
-        ...prev, 
-        error: 'Failed to send message. Please try again later.',
+      let errorMessage = 'Failed to send message. Please try again later.';
+
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          errorMessage = 'Request timed out. Please check your connection and try again.';
+        } else if (error.message.includes('network') || error.message.includes('fetch')) {
+          errorMessage = 'Network error. Please check your connection and try again.';
+        }
+      }
+
+      setFormState(prev => ({
+        ...prev,
+        error: errorMessage,
         isSubmitting: false
       }));
     }
