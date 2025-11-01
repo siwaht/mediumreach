@@ -1,10 +1,8 @@
 import React, { lazy, Suspense } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
 import LoadingSpinner from './components/LoadingSpinner';
-import ElevenLabsWidget from './components/ElevenLabsWidget';
 
-// Lazy load components for better performance
+const Header = lazy(() => import('./components/Header'));
+const Hero = lazy(() => import('./components/Hero'));
 const HowItWorks = lazy(() => import('./components/HowItWorks'));
 const Platforms = lazy(() => import('./components/Platforms'));
 const VoiceAI = lazy(() => import('./components/VoiceAI'));
@@ -12,18 +10,19 @@ const IndustryUseCases = lazy(() => import('./components/IndustryUseCases'));
 const FAQ = lazy(() => import('./components/FAQ'));
 const ContactForm = lazy(() => import('./components/ContactForm'));
 const Footer = lazy(() => import('./components/Footer'));
+const ElevenLabsWidget = lazy(() => import('./components/ElevenLabsWidget'));
 
 function App() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      <Header />
-      <main 
-        role="main"
-        aria-label="Main content"
-        data-testid="main-content"
-      >
-        <Hero />
-        <Suspense fallback={<LoadingSpinner />}>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Header />
+        <main
+          role="main"
+          aria-label="Main content"
+          data-testid="main-content"
+        >
+          <Hero />
           <HowItWorks />
           <Platforms />
           <VoiceAI />
@@ -31,9 +30,9 @@ function App() {
           <FAQ />
           <ContactForm />
           <Footer />
-        </Suspense>
-      </main>
-      <ElevenLabsWidget />
+        </main>
+        <ElevenLabsWidget />
+      </Suspense>
     </div>
   );
 }

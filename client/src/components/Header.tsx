@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { Menu, X } from 'lucide-react';
 
-const Header = () => {
+const Header = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -18,9 +18,17 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleLogoClick = () => {
+  const handleLogoClick = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    setIsOpen(prev => !prev);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   return (
     <header 
@@ -67,8 +75,8 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button 
-              onClick={() => setIsOpen(!isOpen)} 
+            <button
+              onClick={toggleMenu} 
               className="text-gray-700 p-2 -mr-2 hover:bg-gray-100/80 rounded-xl transition-all duration-300 hover:shadow-md"
               aria-label={isOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isOpen}
@@ -92,7 +100,7 @@ const Header = () => {
             <a 
               href="#contact-form" 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:from-blue-800 active:to-purple-800 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 inline-block text-center shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
-              onClick={() => setIsOpen(false)}
+              onClick={closeMenu}
               data-testid="nav-contact-mobile"
             >
               Contact Us
@@ -102,6 +110,7 @@ const Header = () => {
       )}
     </header>
   );
-};
+});
 
+Header.displayName = 'Header';
 export default Header;

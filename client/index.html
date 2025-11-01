@@ -7,10 +7,12 @@
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://unpkg.com">
-    
+
+    <!-- Preload critical font -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+
     <!-- DNS Prefetch for performance -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://unpkg.com">
     
     <!-- Primary Meta Tags -->
@@ -64,6 +66,13 @@
   <body>
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded">Skip to main content</a>
+    <noscript>
+      <div style="padding: 2rem; text-align: center; font-family: system-ui, sans-serif;">
+        <h1 style="color: #1e40af; margin-bottom: 1rem;">MediumReach - AI Agent Platform</h1>
+        <p style="color: #4b5563; margin-bottom: 1rem;">Please enable JavaScript to experience the full functionality of our AI agent platform.</p>
+        <p style="color: #6b7280;">Contact us at <a href="https://www.linkedin.com/company/mediumreach" style="color: #2563eb;">LinkedIn</a> for more information.</p>
+      </div>
+    </noscript>
     <div id="root" role="application" aria-label="MediumReach AI Agent Platform"></div>
     <script type="module" src="/src/main.tsx"></script>
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
