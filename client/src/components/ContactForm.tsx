@@ -36,7 +36,9 @@ const ContactForm = () => {
     setFormState(prev => ({ ...prev, isSubmitting: true, error: '' }));
 
     try {
-      const response = await fetch('/api/contact', {
+      const webhookUrl = 'https://hook.eu2.make.com/8b2a1le43ogn3jno1yhml5yaanz8yn6o';
+
+      const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,14 +47,15 @@ const ContactForm = () => {
           name: formState.name,
           email: formState.email,
           company: formState.company,
-          message: formState.message
+          message: formState.message,
+          timestamp: new Date().toISOString()
         })
       });
 
       if (response.ok) {
-        setFormState(prev => ({ 
-          ...prev, 
-          submitted: true, 
+        setFormState(prev => ({
+          ...prev,
+          submitted: true,
           error: '',
           name: '',
           email: '',
@@ -64,8 +67,8 @@ const ContactForm = () => {
         throw new Error('Failed to send message');
       }
     } catch (error) {
-      setFormState(prev => ({ 
-        ...prev, 
+      setFormState(prev => ({
+        ...prev,
         error: 'Failed to send message. Please try again later.',
         isSubmitting: false
       }));
