@@ -1,0 +1,8 @@
+{
+    "name": "mediumreach",
+    "pages_build_output_dir": "dist",
+    "compatibility_date": "2024-03-01",
+    "vars": {
+        "WEBHOOK_URL": "https://hook.eu2.make.com/8b2a1le43ogn3jno1yhml5yaanz8yn6o"
+    }
+}
