@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import LoadingSpinner from './components/LoadingSpinner';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const Header = lazy(() => import('./components/Header'));
 const Hero = lazy(() => import('./components/Hero'));
@@ -14,26 +15,30 @@ const ElevenLabsWidget = lazy(() => import('./components/ElevenLabsWidget'));
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      <Suspense fallback={<LoadingSpinner />}>
-        <Header />
-        <main
-          role="main"
-          aria-label="Main content"
-          data-testid="main-content"
-        >
-          <Hero />
-          <HowItWorks />
-          <Platforms />
-          <VoiceAI />
-          <IndustryUseCases />
-          <FAQ />
-          <ContactForm />
-          <Footer />
-        </main>
-        <ElevenLabsWidget />
-      </Suspense>
-    </div>
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+        <Suspense fallback={<LoadingSpinner />}>
+          <Header />
+          <main
+            role="main"
+            aria-label="Main content"
+            data-testid="main-content"
+          >
+            <Hero />
+            <HowItWorks />
+            <Platforms />
+            <VoiceAI />
+            <IndustryUseCases />
+            <FAQ />
+            <ContactForm />
+            <Footer />
+          </main>
+          <ErrorBoundary fallback={null}>
+            <ElevenLabsWidget />
+          </ErrorBoundary>
+        </Suspense>
+      </div>
+    </ErrorBoundary>
   );
 }
 

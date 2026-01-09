@@ -1,77 +1,120 @@
-import React, { useState } from 'react';
-import { Send, CheckCircle } from 'lucide-react';
+import React, { useState, useReducer, useCallback } from 'react';
+import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+
+interface FormData {
+  name: string;
+  email: string;
+  company: string;
+  message: string;
+}
+
+interface FormState {
+  data: FormData;
+  status: 'idle' | 'submitting' | 'success' | 'error';
+  error: string;
+}
+
+type FormAction =
+  | { type: 'UPDATE_FIELD'; field: keyof FormData; value: string }
+  | { type: 'SUBMIT_START' }
+  | { type: 'SUBMIT_SUCCESS' }
+  | { type: 'SUBMIT_ERROR'; error: string }
+  | { type: 'RESET' };
+
+const initialState: FormState = {
+  data: { name: '', email: '', company: '', message: '' },
+  status: 'idle',
+  error: '',
+};
+
+function formReducer(state: FormState, action: FormAction): FormState {
+  switch (action.type) {
+    case 'UPDATE_FIELD':
+      return {
+        ...state,
+        data: { ...state.data, [action.field]: action.value },
+        error: '',
+      };
+    case 'SUBMIT_START':
+      return { ...state, status: 'submitting', error: '' };
+    case 'SUBMIT_SUCCESS':
+      return { ...initialState, status: 'success' };
+    case 'SUBMIT_ERROR':
+      return { ...state, status: 'error', error: action.error };
+    case 'RESET':
+      return initialState;
+    default:
+      return state;
+  }
+}
+
+const MAX_RETRIES = 2;
+const RETRY_DELAY = 1000;
 
 const ContactForm = () => {
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    company: '',
-    message: '',
-    submitted: false,
-    error: '',
-    isSubmitting: false
-  });
+  const [state, dispatch] = useReducer(formReducer, initialState);
+  const [retryCount, setRetryCount] = useState(0);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormState(prev => ({ ...prev, [name]: value }));
-  };
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      dispatch({ type: 'UPDATE_FIELD', field: name as keyof FormData, value });
+    },
+    []
+  );
+
+  const submitForm = useCallback(async (): Promise<boolean> => {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...state.data,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || 'Failed to send message');
+    }
+
+    return true;
+  }, [state.data]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Form validation
-    if (!formState.name || !formState.email || !formState.message) {
-      setFormState(prev => ({ ...prev, error: 'Please fill out all required fields' }));
+    const { name, email, message } = state.data;
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      dispatch({ type: 'SUBMIT_ERROR', error: 'Please fill out all required fields' });
       return;
     }
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formState.email)) {
-      setFormState(prev => ({ ...prev, error: 'Please enter a valid email address' }));
-      return;
-    }
+    dispatch({ type: 'SUBMIT_START' });
 
-    setFormState(prev => ({ ...prev, isSubmitting: true, error: '' }));
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formState.name,
-          email: formState.email,
-          company: formState.company,
-          message: formState.message,
-          timestamp: new Date().toISOString()
-        })
-      });
-
-      if (response.ok) {
-        setFormState(prev => ({
-          ...prev,
-          submitted: true,
-          error: '',
-          name: '',
-          email: '',
-          company: '',
-          message: '',
-          isSubmitting: false
-        }));
-      } else {
-        throw new Error('Failed to send message');
+    let attempts = 0;
+    while (attempts <= MAX_RETRIES) {
+      try {
+        await submitForm();
+        dispatch({ type: 'SUBMIT_SUCCESS' });
+        setRetryCount(0);
+        return;
+      } catch (error) {
+        attempts++;
+        if (attempts > MAX_RETRIES) {
+          const errorMessage = error instanceof Error ? error.message : 'Failed to send message';
+          dispatch({ type: 'SUBMIT_ERROR', error: `${errorMessage}. Please try again later.` });
+          setRetryCount(attempts);
+        } else {
+          await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY * attempts));
+        }
       }
-    } catch (error) {
-      setFormState(prev => ({
-        ...prev,
-        error: 'Failed to send message. Please try again later.',
-        isSubmitting: false
-      }));
     }
   };
+
+  const isSubmitting = state.status === 'submitting';
+  const isSuccess = state.status === 'success';
 
   return (
     <section
@@ -139,7 +182,7 @@ const ContactForm = () => {
               <div className="p-6 sm:p-8 md:p-10">
                 <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6" data-testid="text-form-title">Contact Us</h3>
 
-                {formState.submitted ? (
+                {isSuccess ? (
                   <div className="flex flex-col items-center text-center py-8">
                     <div className="bg-green-100 rounded-full p-3 mb-4">
                       <CheckCircle className="h-12 w-12 sm:h-16 sm:w-16 text-green-500" />
@@ -159,13 +202,14 @@ const ContactForm = () => {
                         type="text"
                         id="name"
                         name="name"
-                        value={formState.name}
+                        value={state.data.name}
                         onChange={handleChange}
-                        disabled={formState.isSubmitting}
+                        disabled={isSubmitting}
                         className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px] hover:border-gray-400"
                         required
                         data-testid="input-name"
                         aria-label="Your name"
+                        aria-required="true"
                       />
                     </div>
 
@@ -177,13 +221,14 @@ const ContactForm = () => {
                         type="email"
                         id="email"
                         name="email"
-                        value={formState.email}
+                        value={state.data.email}
                         onChange={handleChange}
-                        disabled={formState.isSubmitting}
+                        disabled={isSubmitting}
                         className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px] hover:border-gray-400"
                         required
                         data-testid="input-email"
                         aria-label="Your email address"
+                        aria-required="true"
                       />
                     </div>
 
@@ -195,9 +240,9 @@ const ContactForm = () => {
                         type="text"
                         id="company"
                         name="company"
-                        value={formState.company}
+                        value={state.data.company}
                         onChange={handleChange}
-                        disabled={formState.isSubmitting}
+                        disabled={isSubmitting}
                         className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px] hover:border-gray-400"
                         data-testid="input-company"
                         aria-label="Your company name"
@@ -211,29 +256,37 @@ const ContactForm = () => {
                       <textarea
                         id="message"
                         name="message"
-                        value={formState.message}
+                        value={state.data.message}
                         onChange={handleChange}
                         rows={4}
-                        disabled={formState.isSubmitting}
+                        disabled={isSubmitting}
                         className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed hover:border-gray-400"
                         required
                         data-testid="input-message"
                         aria-label="Your message"
+                        aria-required="true"
                       ></textarea>
                     </div>
 
-                    {formState.error && (
-                      <div className="text-red-500 text-sm">{formState.error}</div>
+                    {state.error && (
+                      <div 
+                        className="flex items-center gap-2 text-red-600 text-sm bg-red-50 p-3 rounded-lg"
+                        role="alert"
+                        aria-live="polite"
+                      >
+                        <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                        <span>{state.error}</span>
+                      </div>
                     )}
 
                     <button
                       type="submit"
-                      disabled={formState.isSubmitting}
+                      disabled={isSubmitting}
                       className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold px-6 py-3.5 rounded-full transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:transform-none min-h-[48px]"
                       data-testid="button-submit"
                       aria-label="Submit contact form"
                     >
-                      {formState.isSubmitting ? (
+                      {isSubmitting ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
                           Sending...

@@ -1,22 +1,10 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useThrottledScroll } from '../hooks/useThrottledScroll';
 
 const Header = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const isScrolled = useThrottledScroll({ threshold: 10, throttleMs: 100 });
 
   const handleLogoClick = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -49,7 +37,7 @@ const Header = memo(() => {
               className="flex items-center cursor-pointer group"
               role="button"
               tabIndex={0}
-              onKeyPress={(e) => e.key === 'Enter' && handleLogoClick()}
+              onKeyDown={(e) => e.key === 'Enter' && handleLogoClick()}
               aria-label="MediumReach - Go to top"
               data-testid="logo-home"
             >
