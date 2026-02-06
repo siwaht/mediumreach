@@ -1,7 +1,43 @@
+function sanitize(str: string): string {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;')
+        .trim();
+}
+
+function isValidEmail(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+}
+
 export async function onRequestPost({ request, env }) {
     try {
         const body = await request.json();
         const { name, email, company, message, timestamp } = body;
+
+        // Validate required fields
+        if (!name || !email || !message) {
+            return new Response(JSON.stringify({ message: "Name, email, and message are required" }), {
+                status: 400,
+                headers: { "Content-Type": "application/json" },
+            });
+        }
+
+        if (!isValidEmail(email)) {
+            return new Response(JSON.stringify({ message: "Invalid email address" }), {
+                status: 400,
+                headers: { "Content-Type": "application/json" },
+            });
+        }
+
+        if (name.length > 100 || message.length > 5000 || (company && company.length > 100)) {
+            return new Response(JSON.stringify({ message: "Input exceeds maximum length" }), {
+                status: 400,
+                headers: { "Content-Type": "application/json" },
+            });
+        }
 
         const webhookUrl = env.WEBHOOK_URL;
 
@@ -18,10 +54,10 @@ export async function onRequestPost({ request, env }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                name,
-                email,
-                company,
-                message,
+                name: sanitize(name),
+                email: sanitize(email),
+                company: company ? sanitize(company) : '',
+                message: sanitize(message),
                 timestamp: timestamp || new Date().toISOString(),
             }),
         });

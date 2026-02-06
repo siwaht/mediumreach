@@ -1,5 +1,6 @@
-import React, { useState, useReducer, useCallback } from 'react';
+import React, { useReducer, useCallback } from 'react';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { SOCIAL_LINKS } from '../lib/constants';
 
 interface FormData {
   name: string;
@@ -53,7 +54,6 @@ const RETRY_DELAY = 1000;
 
 const ContactForm = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
-  const [retryCount, setRetryCount] = useState(0);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -98,14 +98,12 @@ const ContactForm = () => {
       try {
         await submitForm();
         dispatch({ type: 'SUBMIT_SUCCESS' });
-        setRetryCount(0);
         return;
       } catch (error) {
         attempts++;
         if (attempts > MAX_RETRIES) {
           const errorMessage = error instanceof Error ? error.message : 'Failed to send message';
           dispatch({ type: 'SUBMIT_ERROR', error: `${errorMessage}. Please try again later.` });
-          setRetryCount(attempts);
         } else {
           await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY * attempts));
         }
@@ -153,7 +151,7 @@ const ContactForm = () => {
                     <h3 className="text-lg sm:text-xl font-semibold mb-2">Connect With Us</h3>
                     <div className="flex items-center space-x-3 sm:space-x-4">
                       <a
-                        href="https://www.linkedin.com/company/mediumreach"
+                        href={SOCIAL_LINKS.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-white/20 hover:bg-white/30 active:bg-white/40 active:transform active:scale-[0.98] p-2 rounded-full transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -164,7 +162,7 @@ const ContactForm = () => {
                         </svg>
                       </a>
                       <a
-                        href="https://www.instagram.com/mediumreach/"
+                        href={SOCIAL_LINKS.instagram}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-white/20 hover:bg-white/30 active:bg-white/40 active:transform active:scale-[0.98] p-2 rounded-full transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -259,6 +257,7 @@ const ContactForm = () => {
                         value={state.data.message}
                         onChange={handleChange}
                         rows={4}
+                        maxLength={5000}
                         disabled={isSubmitting}
                         className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed hover:border-gray-400"
                         required

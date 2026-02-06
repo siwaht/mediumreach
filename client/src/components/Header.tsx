@@ -37,7 +37,7 @@ const Header = memo(() => {
               className="flex items-center cursor-pointer group"
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && handleLogoClick()}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), handleLogoClick())}
               aria-label="MediumReach - Go to top"
               data-testid="logo-home"
             >

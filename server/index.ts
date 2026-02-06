@@ -10,8 +10,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  if (app.get("env") === "production") {
+  // Security headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+  // Only cache static assets, never API responses
+  if (app.get("env") === "production" && !req.path.startsWith("/api")) {
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  } else if (req.path.startsWith("/api")) {
+    res.setHeader('Cache-Control', 'no-store');
   }
   next();
 });

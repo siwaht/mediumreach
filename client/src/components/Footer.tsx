@@ -1,8 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
+import { SOCIAL_LINKS } from '../lib/constants';
 
 const Footer = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!showPrivacyPolicy) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowPrivacyPolicy(false);
+        triggerRef.current?.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    modalRef.current?.querySelector<HTMLElement>('button')?.focus();
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [showPrivacyPolicy]);
 
   return (
     <footer 
@@ -60,6 +83,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
+                    ref={triggerRef}
                     onClick={() => setShowPrivacyPolicy(true)} 
                     className="text-sm sm:text-base text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-400 hover:bg-clip-text transition-all duration-300 py-1 text-left"
                     data-testid="button-privacy-policy"
@@ -77,7 +101,7 @@ const Footer = () => {
             <h3 className="text-base sm:text-lg font-bold text-white mb-1">Connect With Us</h3>
             <div className="flex space-x-3 sm:space-x-4">
               <a 
-                href="https://www.linkedin.com/company/mediumreach" 
+                href={SOCIAL_LINKS.linkedin}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-gray-800/50 hover:bg-gradient-to-br hover:from-blue-600 hover:to-blue-700 p-2.5 sm:p-3 rounded-full transition-all duration-300 group min-w-[44px] min-h-[44px] flex items-center justify-center border border-gray-700 hover:border-transparent hover:shadow-lg hover:shadow-blue-600/30 hover:scale-110"
@@ -89,7 +113,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a 
-                href="https://www.instagram.com/mediumreach/" 
+                href={SOCIAL_LINKS.instagram}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-gray-800/50 hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 p-2.5 sm:p-3 rounded-full transition-all duration-300 group min-w-[44px] min-h-[44px] flex items-center justify-center border border-gray-700 hover:border-transparent hover:shadow-lg hover:shadow-purple-600/30 hover:scale-110"
@@ -122,6 +146,8 @@ const Footer = () => {
           aria-modal="true"
           aria-labelledby="privacy-policy-title"
           data-testid="modal-privacy-policy"
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => e.target === e.currentTarget && setShowPrivacyPolicy(false)}
+          ref={modalRef}
         >
           <div className="bg-white text-gray-800 rounded-xl max-w-3xl w-full max-h-[80vh] overflow-y-auto p-4 sm:p-6 relative">
             <button 
