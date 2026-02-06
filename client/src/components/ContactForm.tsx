@@ -1,6 +1,6 @@
 import React, { useReducer, useCallback } from 'react';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
-import { SOCIAL_LINKS } from '../lib/constants';
+import { SOCIAL_LINKS, WEBHOOK_URL } from '../lib/constants';
 
 interface FormData {
   name: string;
@@ -64,18 +64,20 @@ const ContactForm = () => {
   );
 
   const submitForm = useCallback(async (): Promise<boolean> => {
-    const response = await fetch('/api/contact', {
+    const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        ...state.data,
+        name: state.data.name,
+        email: state.data.email,
+        company: state.data.company || '',
+        message: state.data.message,
         timestamp: new Date().toISOString(),
       }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || 'Failed to send message');
+      throw new Error('Failed to send message');
     }
 
     return true;
