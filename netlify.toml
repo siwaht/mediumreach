@@ -3,11 +3,11 @@
   # Directory to change to before starting build
   base = "."
   
-  # Build command - builds both client and server
-  command = "npm run build:static"
+  # Build command
+  command = "npm run build"
   
   # Directory that contains the deploy-ready HTML files
-  publish = "dist/public"
+  publish = "dist"
 
 # Redirects for single-page application
 [[redirects]]
