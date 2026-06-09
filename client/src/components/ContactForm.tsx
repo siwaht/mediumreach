@@ -51,6 +51,7 @@ function formReducer(state: FormState, action: FormAction): FormState {
 
 const MAX_RETRIES = 2;
 const RETRY_DELAY = 1000;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const ContactForm = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
@@ -68,10 +69,10 @@ const ContactForm = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: state.data.name,
-        email: state.data.email,
-        company: state.data.company || '',
-        message: state.data.message,
+        name: state.data.name.trim(),
+        email: state.data.email.trim(),
+        company: state.data.company.trim(),
+        message: state.data.message.trim(),
         timestamp: new Date().toISOString(),
       }),
     });
@@ -90,6 +91,11 @@ const ContactForm = () => {
 
     if (!name.trim() || !email.trim() || !message.trim()) {
       dispatch({ type: 'SUBMIT_ERROR', error: 'Please fill out all required fields' });
+      return;
+    }
+
+    if (!EMAIL_REGEX.test(email.trim())) {
+      dispatch({ type: 'SUBMIT_ERROR', error: 'Please enter a valid email address' });
       return;
     }
 
