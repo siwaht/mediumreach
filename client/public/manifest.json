@@ -1,6 +1,7 @@
 {
     "short_name": "MediumReach",
-    "name": "MediumReach AI Agents",
+    "name": "MediumReach - AI Agent Agency",
+    "description": "Custom AI agents for WhatsApp, Instagram, Telegram, websites, and voice calls.",
     "icons": [
         {
             "src": "favicon.svg",

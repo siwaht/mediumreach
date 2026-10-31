@@ -2,7 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
+
+    <!-- Icons and PWA manifest -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
     
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,68 +17,73 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
 
-    <!-- DNS Prefetch for performance -->
+    <!-- DNS Prefetch for the voice widget script -->
     <link rel="dns-prefetch" href="https://unpkg.com">
     
     <!-- Primary Meta Tags -->
-    <title>MediumReach - Custom AI Agents for WhatsApp, Instagram, Telegram & Voice Calls</title>
-    <meta name="title" content="MediumReach - Custom AI Agents for WhatsApp, Instagram, Telegram & Voice Calls">
-    <meta name="description" content="Transform customer interactions with intelligent AI agents. We build custom chatbots and voice assistants for WhatsApp, Instagram, Telegram, and phone calls. Smart knowledge base, seamless integrations, and 80+ languages."/>
-    <meta name="keywords" content="AI agents, chatbot development, WhatsApp bot, Instagram automation, Telegram bot, voice AI, customer support automation, AI assistant, smart knowledge base, AI memory, global integrations">
+    <title>MediumReach | AI Agent Agency for WhatsApp, Instagram, Telegram & Voice</title>
+    <meta name="title" content="MediumReach | AI Agent Agency for WhatsApp, Instagram, Telegram & Voice">
+    <meta name="description" content="MediumReach is an AI agent agency. We design, build, and manage custom AI agents that answer customers, book appointments, qualify leads, and update your CRM on WhatsApp, Instagram, Telegram, your website, and phone calls."/>
+    <meta name="keywords" content="AI agent agency, AI agents for business, WhatsApp AI agent, Instagram DM automation, Telegram bot, voice AI agent, AI receptionist, AI appointment booking, lead qualification, customer support automation, CRM integration">
     <meta name="author" content="MediumReach">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://mediumreach.com" />
+    <link rel="canonical" href="https://mediumreach.com/" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MediumReach">
     <meta property="og:url" content="https://mediumreach.com/">
-    <meta property="og:title" content="MediumReach - Custom AI Agents for Your Business">
-    <meta property="og:description" content="Build and launch custom AI agents that automate support and boost engagement across WhatsApp, Instagram, Telegram, and voice calls.">
-    <meta property="og:image" content="https://mediumreach.com/og-image.png">
+    <meta property="og:title" content="MediumReach | Custom AI Agents for Your Business">
+    <meta property="og:description" content="Custom AI agents that answer, book, and sell for you around the clock on WhatsApp, Instagram, Telegram, your website, and phone calls.">
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://mediumreach.com/">
-    <meta property="twitter:title" content="MediumReach - Custom AI Agents for Your Business">
-    <meta property="twitter:description" content="Build and launch custom AI agents that automate support and boost engagement across WhatsApp, Instagram, Telegram, and voice calls.">
-    <meta property="twitter:image" content="https://mediumreach.com/twitter-image.png">
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MediumReach | Custom AI Agents for Your Business">
+    <meta name="twitter:description" content="Custom AI agents that answer, book, and sell for you around the clock on WhatsApp, Instagram, Telegram, your website, and phone calls.">
     
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
+      "@type": "ProfessionalService",
       "name": "MediumReach",
-      "url": "https://mediumreach.com",
-      "logo": "https://mediumreach.com/logo.png",
-      "description": "Custom AI agent development for businesses. Specializing in WhatsApp, Instagram, Telegram, and voice AI solutions.",
+      "url": "https://mediumreach.com/",
+      "logo": "https://mediumreach.com/favicon.svg",
+      "description": "AI agent agency that designs, builds, and manages custom AI agents for WhatsApp, Instagram, Telegram, websites, and voice calls.",
       "sameAs": [
         "https://www.linkedin.com/company/mediumreach",
         "https://www.instagram.com/mediumreach/"
       ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "Sales",
-        "availableLanguage": "English"
-      },
-      "offers": {
+      "areaServed": "Worldwide",
+      "knowsAbout": [
+        "AI agents",
+        "Conversational AI",
+        "Voice AI",
+        "WhatsApp Business automation",
+        "Workflow automation"
+      ],
+      "makesOffer": {
         "@type": "Offer",
-        "description": "Custom AI agent development and deployment services"
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Custom AI agent development and management",
+          "serviceType": "AI agent development"
+        }
       }
     }
     </script>
   </head>
   <body>
     <!-- Skip to main content for accessibility -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded">Skip to main content</a>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] bg-blue-600 text-white px-4 py-2 rounded">Skip to main content</a>
     <noscript>
       <div style="padding: 2rem; text-align: center; font-family: system-ui, sans-serif;">
-        <h1 style="color: #1e40af; margin-bottom: 1rem;">MediumReach - AI Agent Platform</h1>
-        <p style="color: #4b5563; margin-bottom: 1rem;">Please enable JavaScript to experience the full functionality of our AI agent platform.</p>
-        <p style="color: #6b7280;">Contact us at <a href="https://www.linkedin.com/company/mediumreach" style="color: #2563eb;">LinkedIn</a> for more information.</p>
+        <h1 style="color: #1e40af; margin-bottom: 1rem;">MediumReach - AI Agent Agency</h1>
+        <p style="color: #4b5563; margin-bottom: 1rem;">Please enable JavaScript to view this site.</p>
+        <p style="color: #6b7280;">You can also reach us on <a href="https://www.linkedin.com/company/mediumreach" style="color: #2563eb;">LinkedIn</a>.</p>
       </div>
     </noscript>
-    <div id="root" role="application" aria-label="MediumReach AI Agent Platform"></div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

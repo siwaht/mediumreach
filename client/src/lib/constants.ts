@@ -8,3 +8,10 @@ export const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://hook.eu2
 export const CONTACT_SECTION_ID = 'contact-form';
 export const HOW_IT_WORKS_ID = 'how-it-works';
 export const MAIN_CONTENT_ID = 'main-content';
+
+export const NAV_LINKS = [
+  { href: '#platforms', label: 'Services' },
+  { href: '#how-it-works', label: 'How It Works' },
+  { href: '#use-cases', label: 'Use Cases' },
+  { href: '#faq', label: 'FAQ' },
+] as const;

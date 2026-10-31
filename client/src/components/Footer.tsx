@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
-import { SOCIAL_LINKS } from '../lib/constants';
+import { SOCIAL_LINKS, NAV_LINKS } from '../lib/constants';
+
+const PRIVACY_LAST_UPDATED = 'October 31, 2026';
 
 const Footer = () => {
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
@@ -10,10 +12,11 @@ const Footer = () => {
   useEffect(() => {
     if (!showPrivacyPolicy) return;
 
+    const trigger = triggerRef.current;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setShowPrivacyPolicy(false);
-        triggerRef.current?.focus();
         return;
       }
 
@@ -43,6 +46,8 @@ const Footer = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
+      // Return focus to the trigger however the modal was closed.
+      trigger?.focus();
     };
   }, [showPrivacyPolicy]);
 
@@ -54,9 +59,9 @@ const Footer = () => {
       data-testid="footer-main"
     >
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-      <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/10 rounded-full filter blur-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" aria-hidden="true"></div>
+      <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full filter blur-3xl" aria-hidden="true"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/10 rounded-full filter blur-3xl" aria-hidden="true"></div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 items-start">
           {/* Company Info */}
@@ -73,7 +78,7 @@ const Footer = () => {
               className="text-sm sm:text-base text-gray-400 max-w-md"
               data-testid="text-footer-description"
             >
-              Transforming customer interactions with intelligent AI agents across messaging platforms and voice calls.
+              An AI agent agency. We design, build, and manage custom AI agents for WhatsApp, Instagram, Telegram, websites, and phone calls.
             </p>
           </div>
           
@@ -82,15 +87,17 @@ const Footer = () => {
             <h3 className="text-base sm:text-lg font-bold text-white mb-1">Quick Links</h3>
             <nav aria-label="Footer navigation">
               <ul className="space-y-2">
-                <li>
-                  <a 
-                    href="#how-it-works" 
-                    className="text-sm sm:text-base text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-400 hover:bg-clip-text transition-all duration-300 inline-block py-1"
-                    data-testid="footer-link-features"
-                  >
-                    Features
-                  </a>
-                </li>
+                {NAV_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <a 
+                      href={link.href} 
+                      className="text-sm sm:text-base text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-400 hover:bg-clip-text transition-all duration-300 inline-block py-1"
+                      data-testid={`footer-link-${link.href.slice(1)}`}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
                 <li>
                   <a 
                     href="#contact-form" 
@@ -127,7 +134,7 @@ const Footer = () => {
                 data-testid="footer-social-linkedin"
                 aria-label="Visit MediumReach LinkedIn page"
               >
-                <svg className="h-4 sm:h-5 w-4 sm:w-5 fill-current text-gray-400 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24">
+                <svg className="h-4 sm:h-5 w-4 sm:w-5 fill-current text-gray-400 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>
               </a>
@@ -139,7 +146,7 @@ const Footer = () => {
                 data-testid="footer-social-instagram"
                 aria-label="Visit MediumReach Instagram page"
               >
-                <svg className="h-4 sm:h-5 w-4 sm:w-5 fill-current text-gray-400 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24">
+                <svg className="h-4 sm:h-5 w-4 sm:w-5 fill-current text-gray-400 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                 </svg>
               </a>
@@ -185,13 +192,15 @@ const Footer = () => {
             >
               Privacy Policy
             </h2>
+            <p className="text-sm sm:text-base text-gray-500 -mt-2 sm:-mt-4 mb-4 sm:mb-6">Last updated: {PRIVACY_LAST_UPDATED}</p>
             
             <div className="space-y-4 sm:space-y-6">
               <section>
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">1. Data Collection</h3>
                 <p className="text-sm sm:text-base text-gray-600 mb-2">To operate and train your custom AI agents, we collect and process the following data related to your business and your customers' interactions:</p>
                 <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-2">
-                  <li><strong>Interaction Data:</strong> Text messages, chat conversations, and voice recordings from calls with your AI agent.</li>
+                  <li><strong>Contact Form Data:</strong> The name, email, company, and message you submit through this website.</li>
+                  <li><strong>Interaction Data:</strong> Text messages, chat conversations, and voice recordings or transcripts from conversations with your AI agent.</li>
                   <li><strong>User Data:</strong> User preferences and interaction history to improve performance.</li>
                   <li><strong>Technical Data:</strong> Information necessary for service operation, such as logs and API call data.</li>
                 </ul>
@@ -201,18 +210,18 @@ const Footer = () => {
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">2. Use of AI Technology</h3>
                 <p className="text-sm sm:text-base text-gray-600 mb-2">Our custom AI agents are built using advanced technology to serve your business needs:</p>
                 <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-2">
-                  <li><strong>Natural Language Processing (NLP):</strong> To understand and interpret text and chat inquiries.</li>
+                  <li><strong>Large Language Models (LLMs):</strong> To understand customer messages and generate accurate replies based on your business knowledge.</li>
                   <li><strong>Voice Recognition & Synthesis:</strong> To manage voice-based interactions effectively.</li>
-                  <li><strong>Machine Learning (ML):</strong> To train your agent for more accurate, personalized responses over time.</li>
-                  <li><strong>Secure Infrastructure:</strong> All data is processed and stored using secure, proprietary methods.</li>
+                  <li><strong>Knowledge Retrieval:</strong> To answer from the documents and data you provide, so responses reflect your policies and products.</li>
+                  <li><strong>Third-Party AI Providers:</strong> We use the business services of established AI, voice, and messaging providers to run your agent. We select services that do not use your data to train their public models.</li>
                 </ul>
               </section>
 
               <section>
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">3. Data Protection</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-2">Mediumreach.com is committed to protecting your data with robust security measures:</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-2">MediumReach protects your data with the following security measures:</p>
                 <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-2">
-                  <li><strong>Encryption:</strong> End-to-end encryption for all communications between your customers and the AI agent.</li>
+                  <li><strong>Encryption:</strong> Data is encrypted in transit and at rest.</li>
                   <li><strong>Secure Storage:</strong> Data is stored in secure cloud environments with regular, redundant backups.</li>
                   <li><strong>Access Control:</strong> Strict access controls and authentication protocols to prevent unauthorized access.</li>
                   <li><strong>Audits:</strong> Regular security audits and system updates to address emerging threats.</li>
@@ -221,7 +230,7 @@ const Footer = () => {
 
               <section>
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">4. Your Rights as a Client</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-2">As a client of Mediumreach.com, you have the right to:</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-2">As a client of MediumReach, you have the right to:</p>
                 <ul className="list-disc ml-5 sm:ml-6 mt-2 text-sm sm:text-base text-gray-600 space-y-2">
                   <li><strong>Access Your Data:</strong> Request access to the data associated with your account.</li>
                   <li><strong>Request Deletion:</strong> Request the deletion of your account data, subject to legal and operational requirements.</li>
@@ -240,9 +249,16 @@ const Footer = () => {
                 </ul>
               </section>
 
+              <section>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">6. Contact</h3>
+                <p className="text-sm sm:text-base text-gray-600">
+                  To exercise any of these rights or ask a question about this policy, use the contact form on this page or message us on{' '}
+                  <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 underline underline-offset-2">LinkedIn</a>.
+                </p>
+              </section>
+
               <section className="border-t pt-4">
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">Changes to Services and Pricing</h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-3 italic">This section would typically be part of your Terms of Service document.</p>
                 
                 <div className="space-y-3">
                   <div>
@@ -252,7 +268,7 @@ const Footer = () => {
                   
                   <div>
                     <h4 className="text-base sm:text-lg font-semibold mb-2">2. Pricing Adjustments</h4>
-                    <p className="text-sm sm:text-base text-gray-600">Considering market changes and the evolution of our services, Mediumreach.com reserves the right to modify our pricing. We are committed to transparency and will provide all clients with a minimum of two (2) weeks' advance notice before any pricing changes take effect.</p>
+                    <p className="text-sm sm:text-base text-gray-600">Considering market changes and the evolution of our services, MediumReach reserves the right to modify our pricing. We are committed to transparency and will provide all clients with a minimum of two (2) weeks' advance notice before any pricing changes take effect.</p>
                   </div>
                 </div>
               </section>

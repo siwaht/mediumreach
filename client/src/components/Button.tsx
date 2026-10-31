@@ -78,13 +78,16 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
       );
     }
 
-    const { as, ...buttonProps } = rest as ButtonAsButton;
+    const { as, disabled, type = 'button', ...buttonProps } = rest as ButtonAsButton;
     return (
       <button
         ref={ref as React.Ref<HTMLButtonElement>}
         className={combinedClassName}
-        disabled={isLoading || buttonProps.disabled}
+        type={type}
         {...buttonProps}
+        // Applied after the spread so isLoading always disables the button.
+        disabled={isLoading || disabled}
+        aria-busy={isLoading || undefined}
       >
         {content}
       </button>

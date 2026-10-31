@@ -1,43 +1,52 @@
 import React, { lazy, Suspense } from 'react';
-import LoadingSpinner from './components/LoadingSpinner';
+import { MotionConfig } from 'framer-motion';
 import ErrorBoundary from './components/ErrorBoundary';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import HowItWorks from './components/HowItWorks';
+import Platforms from './components/Platforms';
+import VoiceAI from './components/VoiceAI';
+import IndustryUseCases from './components/IndustryUseCases';
+import FAQ from './components/FAQ';
+import ContactForm from './components/ContactForm';
+import Footer from './components/Footer';
+import { MAIN_CONTENT_ID } from './lib/constants';
 
-const Header = lazy(() => import('./components/Header'));
-const Hero = lazy(() => import('./components/Hero'));
-const HowItWorks = lazy(() => import('./components/HowItWorks'));
-const Platforms = lazy(() => import('./components/Platforms'));
-const VoiceAI = lazy(() => import('./components/VoiceAI'));
-const IndustryUseCases = lazy(() => import('./components/IndustryUseCases'));
-const FAQ = lazy(() => import('./components/FAQ'));
-const ContactForm = lazy(() => import('./components/ContactForm'));
-const Footer = lazy(() => import('./components/Footer'));
+// Sections are imported eagerly so the page renders in one pass and
+// deep links such as /#contact-form can find their target on first load.
+// Only the third-party voice widget is deferred.
 const ElevenLabsWidget = lazy(() => import('./components/ElevenLabsWidget'));
 
 function App() {
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-        <Suspense fallback={<LoadingSpinner />}>
+      <MotionConfig reducedMotion="user">
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
           <Header />
           <main
-            role="main"
-            aria-label="Main content"
+            id={MAIN_CONTENT_ID}
+            tabIndex={-1}
+            className="outline-none"
             data-testid="main-content"
           >
             <Hero />
-            <HowItWorks />
             <Platforms />
+            <Features />
+            <HowItWorks />
             <VoiceAI />
             <IndustryUseCases />
             <FAQ />
             <ContactForm />
-            <Footer />
           </main>
+          <Footer />
           <ErrorBoundary fallback={null}>
-            <ElevenLabsWidget />
+            <Suspense fallback={null}>
+              <ElevenLabsWidget />
+            </Suspense>
           </ErrorBoundary>
-        </Suspense>
-      </div>
+        </div>
+      </MotionConfig>
     </ErrorBoundary>
   );
 }

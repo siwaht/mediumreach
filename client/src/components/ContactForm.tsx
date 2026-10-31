@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from 'react';
+import React, { useReducer, useCallback, useRef } from 'react';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { SOCIAL_LINKS, WEBHOOK_URL } from '../lib/constants';
 
@@ -51,10 +51,46 @@ function formReducer(state: FormState, action: FormAction): FormState {
 
 const MAX_RETRIES = 2;
 const RETRY_DELAY = 1000;
+const REQUEST_TIMEOUT = 15000;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/** Errors that retrying won't fix (e.g. the webhook rejected the payload). */
+class NonRetryableError extends Error {}
+
+async function postToWebhook(data: FormData): Promise<void> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+
+  try {
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
+      body: JSON.stringify({
+        name: data.name.trim(),
+        email: data.email.trim(),
+        company: data.company.trim(),
+        message: data.message.trim(),
+        timestamp: new Date().toISOString(),
+      }),
+    });
+
+    if (!response.ok) {
+      const message = 'We couldn\'t send your message';
+      // 4xx responses won't succeed on retry; 5xx and network errors might.
+      throw response.status >= 400 && response.status < 500
+        ? new NonRetryableError(message)
+        : new Error(message);
+    }
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
 
 const ContactForm = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
+  // Honeypot: hidden from people, often filled in by spam bots.
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -64,28 +100,9 @@ const ContactForm = () => {
     []
   );
 
-  const submitForm = useCallback(async (): Promise<boolean> => {
-    const response = await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: state.data.name.trim(),
-        email: state.data.email.trim(),
-        company: state.data.company.trim(),
-        message: state.data.message.trim(),
-        timestamp: new Date().toISOString(),
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to send message');
-    }
-
-    return true;
-  }, [state.data]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (state.status === 'submitting') return;
 
     const { name, email, message } = state.data;
 
@@ -99,22 +116,30 @@ const ContactForm = () => {
       return;
     }
 
+    if (honeypotRef.current?.value) {
+      // Pretend success so bots get no signal.
+      dispatch({ type: 'SUBMIT_SUCCESS' });
+      return;
+    }
+
     dispatch({ type: 'SUBMIT_START' });
 
-    let attempts = 0;
-    while (attempts <= MAX_RETRIES) {
+    const data = state.data;
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
       try {
-        await submitForm();
+        await postToWebhook(data);
         dispatch({ type: 'SUBMIT_SUCCESS' });
         return;
       } catch (error) {
-        attempts++;
-        if (attempts > MAX_RETRIES) {
-          const errorMessage = error instanceof Error ? error.message : 'Failed to send message';
-          dispatch({ type: 'SUBMIT_ERROR', error: `${errorMessage}. Please try again later.` });
-        } else {
-          await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY * attempts));
+        const isLastAttempt = attempt === MAX_RETRIES || error instanceof NonRetryableError;
+        if (isLastAttempt) {
+          dispatch({
+            type: 'SUBMIT_ERROR',
+            error: 'We couldn\'t send your message. Please try again in a moment, or reach us on LinkedIn.',
+          });
+          return;
         }
+        await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY * (attempt + 1)));
       }
     }
   };
@@ -130,7 +155,7 @@ const ContactForm = () => {
       data-testid="contact-section"
     >
       {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className="absolute -top-1/2 -right-1/4 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute -bottom-1/2 -left-1/4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       </div>
@@ -145,16 +170,29 @@ const ContactForm = () => {
                   className="text-2xl sm:text-3xl font-extrabold mb-4 sm:mb-6 relative z-10"
                   data-testid="text-contact-title"
                 >
-                  Let's Get Your AI Assistant Started
+                  Let's Build Your AI Agent
                 </h2>
                 <p
                   className="mb-6 sm:mb-8 opacity-95 leading-relaxed text-sm sm:text-base relative z-10"
                   data-testid="text-contact-description"
                 >
-                  Stop losing customers to slow responses. Tell us about your business and we'll show you how AI can help - usually within 24 hours.
+                  Stop losing customers to slow replies and missed calls. Tell us about your business and we'll get back to you within 24 hours to book a free strategy call.
                 </p>
 
-                <div className="space-y-4">
+                <ul className="space-y-2 mb-6 sm:mb-8 relative z-10 text-sm sm:text-base" data-testid="contact-benefits">
+                  {[
+                    'Free, no-obligation strategy call',
+                    'A clear plan and quote for your agent',
+                    'Typical launch in about 5 working days',
+                  ].map((item) => (
+                    <li key={item} className="flex items-center">
+                      <CheckCircle className="h-4 w-4 mr-2 flex-shrink-0 text-green-300" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="space-y-4 relative z-10">
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold mb-2">Connect With Us</h3>
                     <div className="flex items-center space-x-3 sm:space-x-4">
@@ -164,8 +202,9 @@ const ContactForm = () => {
                         rel="noopener noreferrer"
                         className="bg-white/20 hover:bg-white/30 active:bg-white/40 active:transform active:scale-[0.98] p-2 rounded-full transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
                         data-testid="social-linkedin"
+                        aria-label="MediumReach on LinkedIn (opens in a new tab)"
                       >
-                        <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                        <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                         </svg>
                       </a>
@@ -175,8 +214,9 @@ const ContactForm = () => {
                         rel="noopener noreferrer"
                         className="bg-white/20 hover:bg-white/30 active:bg-white/40 active:transform active:scale-[0.98] p-2 rounded-full transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
                         data-testid="social-instagram"
+                        aria-label="MediumReach on Instagram (opens in a new tab)"
                       >
-                        <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                        <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
                       </a>
@@ -186,20 +226,42 @@ const ContactForm = () => {
               </div>
 
               <div className="p-6 sm:p-8 md:p-10">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6" data-testid="text-form-title">Contact Us</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6" data-testid="text-form-title">Tell Us About Your Project</h3>
 
                 {isSuccess ? (
-                  <div className="flex flex-col items-center text-center py-8">
-                    <div className="bg-green-100 rounded-full p-3 mb-4">
+                  <div className="flex flex-col items-center text-center py-8" role="status" aria-live="polite">
+                    <div className="bg-green-100 rounded-full p-3 mb-4" aria-hidden="true">
                       <CheckCircle className="h-12 w-12 sm:h-16 sm:w-16 text-green-500" />
                     </div>
                     <h4 className="text-xl font-bold text-gray-800 mb-2">Thank you for reaching out!</h4>
                     <p className="text-gray-600 max-w-sm">
-                      We'll call or email you within 24 hours with ideas for your business.
+                      We'll call or email you within 24 hours to set up your free strategy call.
                     </p>
+                    <button
+                      type="button"
+                      onClick={() => dispatch({ type: 'RESET' })}
+                      className="mt-6 text-blue-600 hover:text-blue-700 font-medium underline underline-offset-2"
+                      data-testid="button-send-another"
+                    >
+                      Send another message
+                    </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6" role="form">
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6" aria-busy={isSubmitting}>
+                    {/* Honeypot field, visually hidden and skipped by keyboard and screen readers */}
+                    <div className="sr-only" aria-hidden="true">
+                      <label htmlFor="website">Leave this field empty</label>
+                      <input
+                        ref={honeypotRef}
+                        type="text"
+                        id="website"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        defaultValue=""
+                      />
+                    </div>
+
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                         Name *
@@ -213,9 +275,9 @@ const ContactForm = () => {
                         disabled={isSubmitting}
                         className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px] hover:border-gray-400"
                         required
+                        autoComplete="name"
+                        maxLength={100}
                         data-testid="input-name"
-                        aria-label="Your name"
-                        aria-required="true"
                       />
                     </div>
 
@@ -232,9 +294,9 @@ const ContactForm = () => {
                         disabled={isSubmitting}
                         className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px] hover:border-gray-400"
                         required
+                        autoComplete="email"
+                        maxLength={254}
                         data-testid="input-email"
-                        aria-label="Your email address"
-                        aria-required="true"
                       />
                     </div>
 
@@ -250,8 +312,9 @@ const ContactForm = () => {
                         onChange={handleChange}
                         disabled={isSubmitting}
                         className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed min-h-[44px] hover:border-gray-400"
+                        autoComplete="organization"
+                        maxLength={150}
                         data-testid="input-company"
-                        aria-label="Your company name"
                       />
                     </div>
 
@@ -269,9 +332,8 @@ const ContactForm = () => {
                         disabled={isSubmitting}
                         className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed hover:border-gray-400"
                         required
+                        placeholder="E.g. We get 200+ WhatsApp messages a day and want an agent to answer FAQs and book appointments."
                         data-testid="input-message"
-                        aria-label="Your message"
-                        aria-required="true"
                       ></textarea>
                     </div>
 
@@ -279,7 +341,6 @@ const ContactForm = () => {
                       <div 
                         className="flex items-center gap-2 text-red-600 text-sm bg-red-50 p-3 rounded-lg"
                         role="alert"
-                        aria-live="polite"
                       >
                         <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                         <span>{state.error}</span>
@@ -291,17 +352,16 @@ const ContactForm = () => {
                       disabled={isSubmitting}
                       className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold px-6 py-3.5 rounded-full transition-all duration-300 flex items-center justify-center shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:transform-none min-h-[48px]"
                       data-testid="button-submit"
-                      aria-label="Submit contact form"
                     >
                       {isSubmitting ? (
                         <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                          <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" aria-hidden="true"></span>
                           Sending...
                         </>
                       ) : (
                         <>
                           Send Message
-                          <Send className="h-4 w-4 ml-2" />
+                          <Send className="h-4 w-4 ml-2" aria-hidden="true" />
                         </>
                       )}
                     </button>

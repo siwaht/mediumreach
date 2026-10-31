@@ -12,6 +12,8 @@
   html {
     -webkit-tap-highlight-color: transparent;
     scroll-behavior: smooth;
+    /* Keep anchored sections from hiding under the fixed header */
+    scroll-padding-top: 5rem;
   }
   
   /* Ensure minimum touch target size */
@@ -53,7 +55,7 @@
   
   /* Focus styles for better keyboard navigation */
   *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-blue-600;
+    @apply outline outline-2 outline-offset-2 outline-blue-600;
   }
 }
 
@@ -78,7 +80,30 @@
   
   /* Slide up animation */
   .slide-up {
-    animation: slide-up 0.5s ease-out;
+    animation: slide-up 0.5s ease-out both;
   }
-  
+
+  /* Staggered start for background blobs */
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

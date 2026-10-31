@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
 // Type definitions for ElevenLabs widget
 interface ElevenLabsConvaiAttributes {
@@ -14,92 +14,95 @@ declare global {
       >;
     }
   }
-  interface Window {
-    __elevenLabsLoaded?: boolean;
-  }
 }
 
 const SCRIPT_URL = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+const ELEMENT_NAME = 'elevenlabs-convai';
 const AGENT_ID = import.meta.env.VITE_ELEVENLABS_AGENT_ID || 'agent_9501k723dysjf4na4z5nya1tvqzj';
+const WIDGET_ENABLED = import.meta.env.VITE_ENABLE_CHAT_WIDGET !== 'false';
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000;
-const CHECK_INTERVAL = 50;
-const MAX_CHECK_ATTEMPTS = 100;
+const REGISTER_TIMEOUT = 5000;
 
 type WidgetStatus = 'loading' | 'ready' | 'error';
 
-export default function ElevenLabsWidget() {
-  const [status, setStatus] = useState<WidgetStatus>('loading');
-  const [retryCount, setRetryCount] = useState(0);
+/** Wait until the browser is idle so the third-party script doesn't compete with first paint. */
+function whenIdle(): Promise<void> {
+  return new Promise((resolve) => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => resolve(), { timeout: 3000 });
+    } else {
+      setTimeout(resolve, 1500);
+    }
+  });
+}
 
-  const loadScript = useCallback((): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      if (window.__elevenLabsLoaded && customElements.get('elevenlabs-convai')) {
-        resolve();
-        return;
-      }
+function loadScript(): Promise<void> {
+  // Already registered (e.g. a previous attempt finished late): never inject twice,
+  // because a second define() of the same custom element throws.
+  if (customElements.get(ELEMENT_NAME)) return Promise.resolve();
 
-      const existingScript = document.querySelector(`script[src="${SCRIPT_URL}"]`);
-      if (existingScript) {
-        existingScript.remove();
-      }
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector<HTMLScriptElement>(`script[src="${SCRIPT_URL}"]`);
+    // Only replace a script tag that failed; keep one that may still be loading.
+    if (existing?.dataset.failed === 'true') existing.remove();
 
+    if (!document.querySelector(`script[src="${SCRIPT_URL}"]`)) {
       const script = document.createElement('script');
       script.src = SCRIPT_URL;
-      script.type = 'text/javascript';
       script.async = true;
-
-      let checkAttempts = 0;
-      const checkElement = () => {
-        if (customElements.get('elevenlabs-convai')) {
-          window.__elevenLabsLoaded = true;
-          resolve();
-        } else if (checkAttempts < MAX_CHECK_ATTEMPTS) {
-          checkAttempts++;
-          setTimeout(checkElement, CHECK_INTERVAL);
-        } else {
-          reject(new Error('Widget element not registered'));
-        }
+      script.onerror = () => {
+        script.dataset.failed = 'true';
+        reject(new Error('Failed to load ElevenLabs script'));
       };
-
-      script.onload = checkElement;
-      script.onerror = () => reject(new Error('Failed to load script'));
-
       document.body.appendChild(script);
+    }
+
+    const timeoutId = setTimeout(
+      () => reject(new Error('ElevenLabs widget element was not registered in time')),
+      REGISTER_TIMEOUT
+    );
+    customElements.whenDefined(ELEMENT_NAME).then(() => {
+      clearTimeout(timeoutId);
+      resolve();
     });
-  }, []);
+  });
+}
+
+export default function ElevenLabsWidget() {
+  const [status, setStatus] = useState<WidgetStatus>('loading');
 
   useEffect(() => {
-    let mounted = true;
+    if (!WIDGET_ENABLED) return;
 
-    const initWidget = async () => {
-      try {
-        await loadScript();
-        if (mounted) {
-          setStatus('ready');
-        }
-      } catch (error) {
-        if (mounted) {
-          if (retryCount < MAX_RETRIES) {
-            setTimeout(() => {
-              setRetryCount((prev: number) => prev + 1);
-            }, RETRY_DELAY * (retryCount + 1));
-          } else {
+    let cancelled = false;
+
+    const init = async () => {
+      await whenIdle();
+      for (let attempt = 0; attempt <= MAX_RETRIES && !cancelled; attempt++) {
+        try {
+          await loadScript();
+          if (!cancelled) setStatus('ready');
+          return;
+        } catch (error) {
+          if (attempt === MAX_RETRIES) {
             console.warn('ElevenLabs widget failed to load after retries:', error);
-            setStatus('error');
+            if (!cancelled) setStatus('error');
+            return;
           }
+          await new Promise((r) => setTimeout(r, RETRY_DELAY * (attempt + 1)));
         }
       }
     };
 
-    initWidget();
+    init();
 
     return () => {
-      mounted = false;
+      cancelled = true;
     };
-  }, [loadScript, retryCount]);
+  }, []);
 
-  if (status !== 'ready') {
+  if (!WIDGET_ENABLED || status !== 'ready') {
     return null;
   }
 
